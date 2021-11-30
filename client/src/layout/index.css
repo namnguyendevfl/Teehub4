@@ -1,0 +1,12 @@
+/* popups */
+.popup-offsetBackground {
+    height: 100vh;   
+    position: fixed;
+    top: 0px;
+    background: black;
+    z-index: 3;
+    opacity:0.7;    
+}
+.popup-background{
+    z-index: 5;
+}

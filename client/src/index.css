@@ -1,0 +1,305 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* general tags and common use css */
+a {
+  text-decoration: none;
+}
+
+input,.textarea {
+  outline: none;
+  border: none;
+  width: 100%;
+}
+
+.list-group-item:hover{
+  background: lightgrey;
+}
+
+.list-group-item {
+  outline: none;
+  border: none;
+}
+
+.dndItem {
+  list-style-type: none;
+}
+
+.ntbkTextarea{
+min-height:150px;
+max-height: 280px;
+overflow-x: scroll; 
+}
+
+
+.container-fluid {
+  height: 100vh;
+  background-color: #e9ecef;
+}  
+
+
+.btn {
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius:50%;
+  padding: 0;
+  box-shadow: none;
+}
+.btn:hover{
+  background: lightgrey;
+}
+.btn:focus{
+  box-shadow: none;
+}
+/* banner */
+.banner {
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  background: white;
+  z-index: 2;
+}
+
+/* .bannerMain {
+  height: 80px;
+} */
+
+/*Notebook more */
+.ntbkMore {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  top: 80px;
+  /* z-index: 1; */
+}
+/* using navigation instead of nav to not to mess up with bootstrap nav  */
+.navigation {
+  top: 80px;
+  bottom:0;
+  position:fixed;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  z-index: 1;
+}
+.navigation::-webkit-scrollbar {
+  width: 8px;   
+} 
+.navigation:hover::-webkit-scrollbar-track {
+  background-color: #e9ecef; 
+  transition-delay: 3s; 
+  transition-property: background-color;   
+}
+
+.navigation:hover::-webkit-scrollbar-thumb {
+  transition-delay: 3s; 
+  transition-property: background-color; 
+  background-color: #aaa;    
+  border-radius: 20px; 
+  transition-delay: 1s;   
+}  
+
+.main {
+  background: #e9ecef;
+  position: absolute;
+  /* top: 80px; */
+  /* overflow: auto; */
+}
+/* 
+.main::-webkit-scrollbar {
+  width: 0px;   
+} 
+.main::-webkit-scrollbar-track {
+  background-color: none; 
+  transition-delay: 3s; 
+  transition-property: background-color;   
+}
+
+.main::-webkit-scrollbar-thumb {
+  transition-delay: 3s; 
+  transition-property: background-color; 
+  background-color: none;    
+  border-radius: 20px; 
+  transition-delay: 1s;   
+}   */
+
+/* .main::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+  margin-bottom: 10px; 
+}
+
+.main::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+  margin-top: 10px;
+} */
+
+
+.complementary {
+  top: 90px;
+  right: 0px;
+  bottom: 0;
+  position:fixed;
+  padding-right: 8px; 
+}
+
+.comContent{
+  max-height: 100vh;
+  overflow-y: auto;
+}
+.comContent::-webkit-scrollbar {
+  width: 8px;   
+} 
+.comContent:hover::-webkit-scrollbar-track {
+  background-color: #e9ecef; 
+  transition-delay: 3s; 
+  transition-property: background-color;   
+}
+
+.comContent:hover::-webkit-scrollbar-thumb {
+  transition-delay: 3s; 
+  transition-property: background-color; 
+  background-color: #aaa;    
+  border-radius: 20px; 
+  transition-delay: 1s;   
+} 
+
+.ntbkMain::-webkit-scrollbar {
+  width: 8px;   
+} 
+.ntbkMain:hover::-webkit-scrollbar-track {
+  background-color: #e9ecef; 
+  transition-delay: 3s; 
+  transition-property: background-color;   
+}
+
+.ntbkMain:hover::-webkit-scrollbar-thumb {
+  transition-delay: 3s; 
+  transition-property: background-color; 
+  background-color: #aaa;    
+  border-radius: 20px; 
+  transition-delay: 1s;   
+}  
+
+
+
+/* set z-index -1 so it will stay under other elements */
+
+.footer {
+  position: fixed;
+  bottom: 80px;
+}
+.complementaryBar {
+  position: fixed;
+  top:80px;
+}
+
+/* Loader */
+
+.loader {
+  font-size: 10px;
+  margin: 50px auto;
+  text-indent: -9999em;
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  background: white !important;
+  /* background: var(--redux-color); */
+  background: -moz-linear-gradient(
+    left,
+    var(--redux-color) 10%,
+    rgba(128, 0, 255, 0) 42%
+  );
+  background: -webkit-linear-gradient(
+    left,
+    var(--redux-color) 10%,
+    rgba(128, 0, 255, 0) 42%
+  );
+  background: -o-linear-gradient(
+    left,
+    var(--redux-color) 10%,
+    rgba(128, 0, 255, 0) 42%
+  );
+  background: -ms-linear-gradient(
+    left,
+    var(--redux-color) 10%,
+    rgba(128, 0, 255, 0) 42%
+  );
+  background: linear-gradient(
+    to right,
+    var(--redux-color) 10%,
+    rgba(128, 0, 255, 0) 42%
+  );
+  position: relative;
+  -webkit-animation: load3 1.4s infinite linear;
+  animation: load3 1.4s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.loader:before {
+  width: 50%;
+  height: 50%;
+  /* background: var(--redux-color); */
+  background:blue;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+
+.loader:after {
+  background: #ffffff;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+
+

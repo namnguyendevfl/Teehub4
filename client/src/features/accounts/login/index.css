@@ -1,0 +1,140 @@
+.loginBg {
+    background: #e9ecef;
+    z-index: 2;
+}
+
+.loginBox {
+    width:700px;
+    height:520px;
+    background:white;
+    box-shadow: 0px 0px 5px 0.7px #6c757d;
+    border-radius: 8px;    
+}
+
+.loginBoxTop {
+    height:110px
+}
+
+.loginBoxMiddle{
+    margin:auto
+}
+
+.loginBoxBottom{
+    border:1px solid;
+    height:60px;
+    position: absolute;
+    bottom:0px;
+    background:lightgray
+}
+
+.accLoginPopup {
+    position: absolute;
+    width: 500px;
+    height: 380px;
+    /* top: 50%;
+    left: 50%;
+    margin-top: -200px; /* Negative half of height. */
+    /* margin-left: -250px; */
+    z-index: 4;
+    /* width: 300px;
+    height: 200px; */
+    /* transform: translateY(100%) translateY(-7rem); */
+    background-color: white;
+    border-radius:8px;
+    box-shadow: 0px 0px 5px 0.7px #6c757d;    
+}
+
+
+
+
+/*signup*/
+
+.accountSignupInput{
+    /* border:1.5px solid #adb5bd!important; */
+    /* background: #e9ecef; */
+    border-radius: 6px;
+    height:54px;
+}
+.nameInput {
+    width:230px;
+}
+.birthday-select{
+    width:150px;
+    background: none;
+    outline:none;
+    border:none;
+}
+
+select {
+    /* reset */   
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.birthday-arrowDown{
+    position: absolute;
+    right: 12px;
+    top: 12px;   
+    color:black;
+    z-index: -1;
+     
+}
+.signupBtn, .createAccBtn, .signAllOutBtn {
+    /* background: #0d6efd; */
+    color:white !important;  
+    border-radius: 8px !important;
+    border: none;
+}
+
+.signupBtn{
+    background: #0d6efd;
+}
+.createAccBtn{
+    /* background: #6a994e; */
+    color: black !important;
+    background: none !important;
+}
+.signAllOutBtn {
+    /* background: #ae2012; */
+    color:black !important;
+    background: none
+}
+.signupBtnFont {
+    font-weight: 700;
+}
+.signupBtn:hover {
+    opacity: 0.9;   
+}
+.createAccBtn:hover, .signAllOutBtn:hover {
+    /* opacity: 0.9; */
+    background: lightgray!important;
+}
+
+
+/* Login */
+
+
+.accLoginListBox {
+    max-height: 180px;
+    overflow-y: scroll;
+}
+.accLoginListBox::-webkit-scrollbar {
+    width: 8px;   
+} 
+.accLoginListBox:hover::-webkit-scrollbar-track {
+    background-color: #e9ecef; 
+    transition-delay: 3s; 
+    transition-property: background-color;   
+}
+
+.accLoginListBox:hover::-webkit-scrollbar-thumb {
+    transition-delay: 3s; 
+    transition-property: background-color; 
+    background-color: #aaa;    
+    border-radius: 20px; 
+    transition-delay: 1s;   
+}  
+

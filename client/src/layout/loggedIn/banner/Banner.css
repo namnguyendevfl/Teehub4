@@ -1,0 +1,190 @@
+
+/* styling btns with hover effect and barFilled beneath them */
+.button, .buttonSm, .Ava {
+    /* position: relative;  */
+    width:70px;
+    height:43px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: white;
+    border-radius: 8px;
+    /* setup a black color for easy styling */
+    /* border: 1px solid black;  */
+}
+/*Remove Ava hovering effect*/
+.buttonSm, .Ava {
+    width:55px;
+}
+
+.buttonSm:hover,.button:hover{
+    background:#e9ecef ;
+}
+
+.barFilled, .barSmFilled, .pauseBarFilled{
+    height:3px;
+    width:70px;
+    background-color: #0d6efd;
+    left:0px;
+    top:43px;
+    position: absolute;
+
+  }
+.pauseBarFilled{
+    background: #d00000;
+}
+.barSmFilled {
+      width:55px;
+    }
+
+/* setup left and right width*/
+.leftBanner {
+    max-width:502px;
+    min-width:502px;
+}
+.rightBanner {
+    max-width:350px;
+    /* min-width:400px; */
+}
+
+
+/*Styling toolTip */
+.toolTip {
+    position: relative;
+    border-radius: 8px;
+    z-index: 10
+}
+.tooltiptext, .toolTipBar {
+    font-size: smaller;
+    /* background: blue; */
+    /* visibility: visible; */
+    visibility: hidden;
+    border-radius: 5px;
+    /* width: 90px; */
+    height:40px; 
+    background-color: white;
+    /* background-color: blue; */
+    color: #6c757d;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    /* left: -9px; */
+    top: 62px;
+    /* box-shadow: 0px 1px 3px 1px lightgrey;    */
+    /* top:10px */
+    /* border:1px solid black; */
+}
+.toolTip:hover .tooltiptext {
+    visibility: visible;
+    box-shadow: 0px 1px 3px 1px lightgrey;     
+}
+
+/*black and white tooltip */
+.toolTipBar {
+    visibility: visible;
+    /* visibility: hidden; */
+    background-color: black;
+    /* background-color: blue; */
+    color: white;
+    padding: 0px 5px;
+    /* Position the tooltip text - see examples below! */
+    /* right: -9px; */
+    top: 19px;
+    /* top:12px */
+}
+.rightHeaderToolTip{
+    width:40px;
+    height:40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tooltipBtn, .forwardBtn {
+    /* width:40px;
+    height:40px; */
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    border: none;
+  }
+.forwardBtn {
+    width:30px;
+    height:30px;
+    outline:none;
+    border:none;
+    /* background-color: black; */
+        /* background-color: blue; */
+    color:white;
+    stroke:white;
+
+}
+.forwardBtn:hover,.tooltipBtn:hover{
+    border-radius: 50%;
+    width:30px;
+    height:30px;
+    background-color:#636a70;
+}
+
+
+
+ /* forwardArrowSvgWhite  */
+/*Styling focus and break input */
+.durationInput {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 57px;
+    height: 40px; 
+    text-align: center; 
+    font-size: 1.5em;
+    background-color: black;
+    color:white;
+    outline: none;
+    border: none;
+  }
+
+.toolTipRightBar {
+    right: 17px;
+}
+
+/*Styling searching box*/
+.searchBox {
+    border: 1px solid black;
+    padding-left: 5px;
+    height: 37px;
+    font-size: small;
+    min-width: 110px;
+}
+/* .searchBox:focus{
+    box-shadow: 0px 0px 2px 0.1px blue ;
+} */
+.searchInput::placeholder{
+    font-size: 1.2em;
+}
+/*  */
+
+
+
+
+  
+/*Styling placeholder */
+.durationInput::placeholder{
+color: #90979c;
+font-size: 0.77em;
+margin-top: 10px;
+/* display: flex;
+align-items: center;
+justify-content: center; */
+}
+
+
+
+
+

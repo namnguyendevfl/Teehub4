@@ -1,0 +1,166 @@
+.notebooks {
+    position: fixed;
+    width: inherit;
+    right: 3px;
+    top: 81px;
+    background-color: #e9ecef;
+
+}
+.offsetNtbk {
+    height: 130px;
+}
+/* Option Bar */
+
+.ntbkBtn, .offsetNtbkBtn {
+    border: none;
+    outline: none;
+    background: none !important;
+    /* background: blue !important; */
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.ntbkBtn:hover {
+    background: lightgray !important;
+    border-radius: 50%;
+} 
+
+.ntbkDropdown:hover {
+    background: #636a70 !important;
+    border-radius: 8px;
+}
+
+.dropdownNtbkListBox {
+    position: absolute;
+    max-height: 50vh;
+    border-radius: 8px;
+    z-index: 15;
+    background-color: black;
+    left: -12px;
+    right: 12px;
+}
+.optionNtbkBox {
+    width : 450px;
+    min-height:300px;
+    height: max-content;
+    /* min-height:300px;
+    max-height: 450px; */
+    position: absolute;
+    top: 45px;
+    /* right: 10px; */
+    z-index: 10 !important;
+    opacity: 1 !important;
+    box-shadow: 0px 2px 15px 5px lightgrey;
+    border-radius: 8px;
+}
+
+.ntbkOptnBoxTitle {
+    padding: 12px 0 12px 0;
+}
+.ntbkOptnBoxList {
+    height: 195px;
+    overflow-x: hidden ;
+    overflow-y: auto; 
+}
+.saveNtbk {
+    background: #0d6efd;
+    color:white !important;  
+    border-radius: 8px !important;
+    z-index: 12; 
+}
+.saveNtbk:hover {
+    opacity: 0.9;
+    background: #0d6efd !important;
+}
+
+.addList {
+    width: 450px;
+}
+.orderList {
+    list-style-type: none;
+    width: 32px;
+    height: 50px !important;
+    overflow: auto;
+    text-align: center;
+    z-index: 11;
+}
+/* .dlt:hover  */
+/* remove input hover from .list-group-item */
+
+.createInput:hover, .dlt:hover, .ntbkInRightMenu:hover, .addList:hover {
+    background-color: white !important;
+}
+.number {
+    width:25px;
+
+}
+.number::placeholder{
+    color: #90979c;
+    padding-left: 3px;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+  }
+
+
+/* notebook expand */
+.ntbkExpandToRight, .ntbkBtnExpandToRight, .ntbkBtnExpandToRightBg, .ntbkEditToRight {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    background: none;
+    border-radius: 50%; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    width: 32px;
+    height: 32px;
+}
+
+.ntbkExpandToRight, .ntbkEditToRight {
+    position: absolute;
+    left: -64px;
+    top: -24px;
+    width: 80px !important;
+    height: 80px !important; 
+}
+.ntbkEditToRight {
+    left: -100px !important;
+}
+.ntbkBtnExpandToRight {
+    background: black!important;
+    color:white !important;
+    /* background: white!important; */
+    box-shadow: 0px 1px 4px 1px lightgrey;  
+    z-index: 2!important;
+}
+
+.ntbkBtnExpandToRight:hover {
+    opacity: 0.8 !important;;
+}
+
+.ntbkEscapeFromExpand {
+    position: absolute;
+    top: -24px;
+    width: 80px !important;
+    height: 80px !important; 
+    z-index: 1;
+    /* border: 1px solid red     */
+}
+
+.ntbkBtnExpand {
+    color:white !important
+}
+
+
+/* Complementary content */
+.comContent{
+    max-height: 100vh;
+    overflow-y: auto;
+}
