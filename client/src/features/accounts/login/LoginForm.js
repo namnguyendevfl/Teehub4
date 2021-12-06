@@ -45,7 +45,7 @@ const UserLoggedIn = ({ handleEscape, user}) => {
                 style = {{height: "90px", width:"90px", borderRadius: "50%"}}
                 > */}
 
-                <strong className = "d-flex align-items-center justify-content-center"
+                <strong className = "d-flex align-items-center justify-content-center fs-1"
                 style = {{height: "90px", width:"90px", borderRadius: "50%", background:"#8b8c89", color:"white"}}
                 
                 > {user.first_name[0]}{user.sur_name[0]} </strong>
