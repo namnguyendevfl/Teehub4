@@ -5,6 +5,7 @@ import UpdateNRearrageObj from "./UpdateNListObj";
 export default function UpdateNList(props) {
     const { ntbkSelected } = useSelector(state => state.ntbks);
     const { chapterSelected } = useSelector(state => state.chapters)
+    
     if (!ntbkSelected) {
         return (<UpdateNRearrageObj option = "notebooks" />)
     }

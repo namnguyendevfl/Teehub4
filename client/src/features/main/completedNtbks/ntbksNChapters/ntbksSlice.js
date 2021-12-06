@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createSelector, createEntityAdapter } from "@reduxjs/toolkit"
-import { dltObj, listObjs } from "../apiNtbksComplete";
+import { listObjs } from "../apiNtbksComplete";
 import { initState } from "../../../../redux/getInitStates";
 
 //This slice is used for both ntbks in Main and in Complementaries
@@ -49,7 +49,6 @@ const ntbksSlice = createSlice({
             ntbksAdapter.removeOne(state, action.payload)
         },
         updateNtbk(state, action) {
-            // console.log(action.payload)
             ntbksAdapter.updateOne(state,action.payload)
         }
     },

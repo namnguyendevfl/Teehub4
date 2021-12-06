@@ -28,5 +28,7 @@ export function Centralize(height, top, width, left) {
         bgPosition: bgPosition,
         elementPosition: elementPosition,    
         offsetElementPosition: offsetElementPosition,
+        // elementWidth: viewWidth,
+        // elementHeight: viewHeight,
     }   
 }

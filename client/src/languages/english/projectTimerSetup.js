@@ -10,9 +10,9 @@ export const projectSetupEn = {
         "Study",
         "Something else"
     ],
-    setupSession: "Pomodoro timer",
-    break_interval: "Break interval",
-    focus_interval: "Focus interval",
+    setupSession: "Pomodoro Timer",
+    break_interval: "Break Interval",
+    focus_interval: "Focus Interval",
     project: "Project",
     project_option: "Optional",
     focus_mode: "Focus mode"

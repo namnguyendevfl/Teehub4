@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"
-import { CaretDown, Switch } from "../../../utils/icons/complementary/Complementary";
+import { CaretDownIcon, SwitchIcon } from "../../../utils/icons/complementary/Complementary";
 import { saveChapterSelected, selectChapterById, selectChapterIds, selectChapterIdsAvai } from "../../main/completedNtbks/ntbksNChapters/chaptersSlice";
 import { saveNtbkSelected, selectNtbkById, selectNtbkIdsAvai } from "../../main/completedNtbks/ntbksNChapters/ntbksSlice";
 import { selectTopicById, selectTopicIds } from "../../main/completedNtbks/topics/topicsSlice";
@@ -132,7 +132,7 @@ export default function NtbkNChapterList({option}) {
                                     id = "caretTopicDown"
                                     onClick = {handleTopicDropdown}
                                 > 
-                                <CaretDown />
+                                <CaretDownIcon />
                             </button>  
                         }
                         {
@@ -141,7 +141,7 @@ export default function NtbkNChapterList({option}) {
                                 id = {initialId}
                                 onClick = {handleSwitch}
                                 >  
-                                <Switch option = {option} />
+                                <SwitchIcon option = {option} />
                             </button>       
                         }  
                     </div>
@@ -150,14 +150,14 @@ export default function NtbkNChapterList({option}) {
             {
                 itemSwitch
                 ?   
-                    <ul className = "list-group dropdownNtbkListBox ">
+                    <ul className = "list-group dropdown-ntbkListBox ">
                         {dropdownItemList(optionIds, option)}
                     </ul>    
                 :   null
             }
             {
                 chapterSelected && topicsDropdown
-                ?   <ul className = "list-group dropdownNtbkListBox ">
+                ?   <ul className = "list-group dropdown-ntbkListBox ">
                         {dropdownItemList(topicIds, "topics")}
                     </ul>
                 :   null

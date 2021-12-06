@@ -1,6 +1,8 @@
 const service = require("./users.service");
 const argon2 = require("argon2");
 const asyncBoundaryError = require("../errors/asyncBoundaryError")
+const hashPw = require("../utils/hashPw")
+const validator = require("validator")
 
 function hasData(req,res,next) {
     if (req.body.data) {
@@ -13,6 +15,26 @@ function hasData(req,res,next) {
     });
 }
 
+function passwordIsValid (req,res,next) {
+    const password = req.body.data.password;
+    if ( password.length >=8 ) return next();
+    return next({
+        status: 400,
+        message: "invalid password"
+    });
+}
+
+
+function user_nameIsValid (req, res, next) {
+    const {user_name} = req.body.data;
+    if  (validator.isEmail(user_name)) return next()
+    if (validator.isEmpty(user_name) || isNaN(user_name))
+    return next({
+        status: 400,
+        message: "invalid username"
+    }) 
+    if(!isNaN(user_name)) return next()
+}
 
 let userLoggingIn;
 const postUserLoggingIn = (req, res) => {
@@ -21,11 +43,6 @@ const postUserLoggingIn = (req, res) => {
 }
 
 
-
-// userLoggingIn = {
-//     user_name : 8134202585,
-//     password: "supperkid990"
-// }
 const readUserLoggingIn = async (req, res, next) => {
     const { user_name, password } = userLoggingIn;
     const users = await service.list();
@@ -36,6 +53,8 @@ const readUserLoggingIn = async (req, res, next) => {
             const newUser = {
                 id : foundUser.id,
                 user_name: foundUser.user_name,
+                first_name: foundUser.first_name,
+                sur_name: foundUser.sur_name
             }
             return res.json({data:newUser})
         } else return next({
@@ -49,10 +68,36 @@ const readUserLoggingIn = async (req, res, next) => {
 }
 
 
+const create = async (req, res, next) => {
+    const rawNewUser = req.body.data;
+    rawNewUser.password = res.locals.pwHashed;
+    const hashedNewUser = await service.create(rawNewUser)
+    const userReturned = {
+        id : hashedNewUser.id,
+        user_name: hashedNewUser.user_name, 
+    }
+    return res.status(201).json({data: userReturned})
+}
 
 
-
+const listUsers = async (req, res, next) => {
+    const users = await service.list();
+    const newUsers = []
+    users.forEach((user,idx) => {
+        const {id, user_name, first_name, sur_name, birthday} = user
+        newUser = {
+            id: id,
+            user_name: user_name,
+            first_name: first_name,
+            sur_name: sur_name,
+        }
+        newUsers.push(newUser)
+    })
+    return res.json({data: newUsers})
+}
 module.exports = {
-    postUserLoggingIn: [ hasData, asyncBoundaryError(postUserLoggingIn)],
+    postUserLoggingIn: [ hasData, user_nameIsValid, passwordIsValid, asyncBoundaryError(postUserLoggingIn)],
     readUserLoggingIn: [ asyncBoundaryError(readUserLoggingIn)],
+    create: [hasData, user_nameIsValid, passwordIsValid, hashPw, asyncBoundaryError(create)],
+    listUsers: [asyncBoundaryError(listUsers)]
 }

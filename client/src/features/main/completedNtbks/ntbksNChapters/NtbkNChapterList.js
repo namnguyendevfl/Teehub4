@@ -47,9 +47,7 @@ export default function NtbkNChapterList({option}) {
     const ntbkIds = useSelector(selectNtbkIds);
     const chapterIds = useSelector(selectChapterIds)
     const optionIds = option === "ntbks" ? ntbkIds : chapterIds 
-    // const ntbkIds = useSelector(selectNtbkIds)
     const renderedList = optionIds.map((optionId, idx) => {
-    // const renderedNtbkList = ntbkIds.map((ntbkId,idx) => {
         return <ListItem key = {idx} id = {optionId} option = {option} url = {url}/>
     })
     const loader = <div className = "loader"/>

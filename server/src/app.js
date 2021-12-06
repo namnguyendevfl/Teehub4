@@ -10,7 +10,10 @@ const topicsRouter = require("./writings/topics/topics.router")
 
 const app = express();
 app.use(express.json());
-app.use(cors())
+app.use(cors({
+    origin: "http://localhost:3000", // restrict calls to this address
+    methods: "GET, DELETE, PUT, CREATE",  // only allow CRUD requests
+}));
 
 app.use("/users", usersRouter);
 app.use("/notebooks/:userId", ntbksRouter);

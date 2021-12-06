@@ -38,6 +38,9 @@ const topicsSlice = createSlice({
         },
         dltTopic(state, action) {
             topicsAdapter.removeOne(state, action.payload)
+        },
+        updateTopic (state,action) {
+            topicsAdapter.updateOne(state, action.payload)
         }
     },
     extraReducers: builder => {
@@ -60,7 +63,8 @@ const topicsSlice = createSlice({
 
 export const {
     saveNewTopic,
-    dltTopic
+    dltTopic,
+    updateTopic
 } = topicsSlice.actions
 
 export default topicsSlice.reducer

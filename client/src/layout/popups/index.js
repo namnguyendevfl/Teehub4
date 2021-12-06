@@ -1,42 +1,54 @@
 import React from "react";
-// import SignupPopup from "../accounts/AccSignupPopup";
-// import AccLogin from "../accounts/AccLogin";
-// import TimerSetup from "../../newFeatureTest/newFeatureTest";
+import { useSelector } from "react-redux";
+import LoginForm, { LoginPopup } from "../../features/accounts/login/LoginForm";
 import { Centralize } from "../../utils/styles/centralize";
-import { ntbkCRUDPopup, pomodoroPopup } from "../../utils/styles/popupForms";
 import NtbkCRUD from "./ntbkCRUDPopup";
+import PomodoroTimer from "./PomodoroTimer";
+import UserSignup from "./signupPopup";
 
-export default function Popups(props) {
-    const {
-        displayCreateAcc,
-        displayLoginPopup,
-    } = props
 
-    const { height_pomodoro, top_pomodoro, width_pomodoro, left_pomodoro } = pomodoroPopup
-    // const { height_ntbkCRUD, top_ntbkCRUd, width_ntbkCRUD, left_ntbkCRUD } = ntbkCRUDPopup
-    const { bgPosition, elementPosition,offsetElementPosition} = (()=> {
-        if (displayCreateAcc) return Centralize(530,49,500,50)
-        if (displayLoginPopup) return Centralize(380,50,500,50)
-        return Centralize(height_pomodoro,top_pomodoro,width_pomodoro,left_pomodoro)
-    })()
-    // const { width_pomodoro, height_pomodoro } = pomodoroPopup
-  
+export default function Popups() {
+    // get the popupSelected state from Redux store
+    const { popupSelected } = useSelector(state => state.layoutAlters)
+    const position = () => {
+        if (popupSelected === "signup") return { height: 550, top: 50, width:500, left: 50 }
+        if (popupSelected === "timer") return { height: 400, top: 50, width:500, left: 50 }
+        if (popupSelected === "login") return { height: 400, top: 50, width:380, left: 50 }
+        return { height: 400, top: 50, width:500, left: 50 }
+    }
+
+    const { height, top, width, left } = position()
+    //Call the Centralize component in the utils/style and pass in appropriate arguments to get background and element set up for the popup 
+    const { bgPosition, elementPosition, offsetElementPosition } = Centralize(height, top, width, left)
+    
+    //Style the popup form 
     const elementStyle = { 
         ...elementPosition,
-        width: `${width_pomodoro}px`,
-        height: `${height_pomodoro}px`,
-        zIndex: "2",
-        border: "1px solid",
+        width: `${position().width}px`,
+        height: `${position().height}px`,
+        zIndex: "4",
+        // border: "1px solid",
         background: "white",
+        borderRadius: "8px",
+        // boxShadow: "0px 0px 5px 0.7px #6c757d" 
+        boxShadow: "0px 0px 10px 2px" 
+
+    }
+
+    const popupRendered = () => {
+        if (popupSelected === false) return null
+        if (popupSelected === "timer") return <PomodoroTimer />
+        if (popupSelected === "signup") return <UserSignup />
+        if (popupSelected === "login") return <LoginPopup />
+        return <NtbkCRUD />
     }
     return ( 
     <>
         <>
         <div className = "popup-offsetBackground w-100"></div>
         <div className = "popup-background" style = {bgPosition} >
-                {/* <TimerSetup /> */}
             <div style = {elementStyle}>
-                <NtbkCRUD />
+                {popupRendered()}
             </div>
             <div style ={offsetElementPosition}></div>
         </div>

@@ -17,6 +17,8 @@
     "prettier": "2.5.0"
   },
   "dependencies": {
-    "react-icons": "^4.3.1"
+    "react-icons": "^4.3.1",
+    "react-phone-number-input": "^3.1.41",
+    "validator": "^13.7.0"
   }
 }

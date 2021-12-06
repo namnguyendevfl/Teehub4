@@ -1,6 +1,8 @@
 import React, {  useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import { generalTitles } from "../../../../../languages/english/generalTitles";
+import { SCULDMTitlesEn } from "../../../../../languages/english/ntbks";
 import { popupChanged } from "../../../../../layout/layoutAltersSlice";
 import DnD from "../../../../../utils/dnd/DnD";
 import { complementary } from "../../../../../utils/icons/complementary/Complementary";
@@ -25,15 +27,16 @@ export default function UpdateNRearrageObj ({option}){
     const topics = useSelector(selectTopicsFiltered);
     const [ popUpOff, setPopupOff ] = useState(false)
     const dispatch = useDispatch()
+    const { update_list_ntbk_text, update_list_chapter_text, update_list_topic_text} = SCULDMTitlesEn
 
     useEffect(() => {
         if (popUpOff) dispatch(popupChanged(false))
     },[popUpOff])
     const objects = () => {
         switch (option) {
-            case "notebooks": return {ids: ntbkIds, objs: ntbks};
-            case "chapters": return {ids: chapterIds, objs: chapters};
-            case "topics": return {ids: topicIds, objs: topics};
+            case "notebooks": return {ids: ntbkIds, objs: ntbks, title: update_list_ntbk_text};
+            case "chapters": return {ids: chapterIds, objs: chapters, title: update_list_chapter_text};
+            case "topics": return {ids: topicIds, objs: topics, title: update_list_topic_text};
             default:
         }
     }
@@ -83,34 +86,31 @@ export default function UpdateNRearrageObj ({option}){
     <>
             <div className="row d-flex text-aligns-center m-0 justify-content-center">
             <div className = "col-2"></div>
-            <h5 className = "ntbkOptnBoxTitle col-8 text-center m-0">Edit {option}</h5>
+            <h5 className = "my-3 col-8 text-center m-0">{objects().title}</h5>
             <div className = "col-2 m-0 d-flex align-items-center justify-content-end">
                 <button className = "ntbkBtn d-flex align-items-center p-2 "
                 onClick = {handleEscape}
                 >
-                    {complementary.escape()}
+                    {complementary.escapeIcon()}
                 </button>
             </div>
         </div>
         <hr className =" m-0 p-0"/>
-        <div className = "ntbkOptnBoxList">
+        <div className = "ntbk-popup-segment-middle m-1 my-3 me-3">
             <DnD 
                 indicator = {option}
                 objsEdited = { itemsEdited }
                 setObjsEdited = { setItemsEdited }
                 objects = {objects().objs}
-                // count = {ntbkAlteredCount}
-                // setCount = {setNtbkAlteredCount}
             />
         </div>
         <div className = "text-center w-100 px-3">
         <button 
-            className = "mb-3 saveNtbk list-group-item w-100 d-flex align-items-center justify-content-center text-center "
+            className = "submit-btn list-group-item w-100 d-flex align-items-center justify-content-center text-center "
             type = "submit"
             onClick = {handleUpNList}
             >
-            Save
-            {/* <Plus /> */}
+            <strong> {generalTitles.save_text} </strong>
         </button>
         </div>
       

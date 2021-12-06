@@ -1,9 +1,9 @@
-.loginBg {
+.login-bg {
     background: #e9ecef;
     z-index: 2;
 }
 
-.loginBox {
+.login-box {
     width:700px;
     height:520px;
     background:white;
@@ -11,15 +11,15 @@
     border-radius: 8px;    
 }
 
-.loginBoxTop {
+.login-segment-top {
     height:110px
 }
 
-.loginBoxMiddle{
+.login-segment-middle {
     margin:auto
 }
 
-.loginBoxBottom{
+.login-segment-bottom {
     border:1px solid;
     height:60px;
     position: absolute;
@@ -27,89 +27,20 @@
     background:lightgray
 }
 
-.accLoginPopup {
-    position: absolute;
-    width: 500px;
-    height: 380px;
-    /* top: 50%;
-    left: 50%;
-    margin-top: -200px; /* Negative half of height. */
-    /* margin-left: -250px; */
-    z-index: 4;
-    /* width: 300px;
-    height: 200px; */
-    /* transform: translateY(100%) translateY(-7rem); */
-    background-color: white;
-    border-radius:8px;
-    box-shadow: 0px 0px 5px 0.7px #6c757d;    
+.complementary-login-segment-btns {
+    position: absolute ;
+    left: 12px ;
+    bottom: 16px
 }
 
-
-
-
-/*signup*/
-
-.accountSignupInput{
-    /* border:1.5px solid #adb5bd!important; */
-    /* background: #e9ecef; */
-    border-radius: 6px;
-    height:54px;
-}
-.nameInput {
-    width:230px;
-}
-.birthday-select{
-    width:150px;
-    background: none;
-    outline:none;
-    border:none;
-}
-
-select {
-    /* reset */   
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-.birthday-arrowDown{
-    position: absolute;
-    right: 12px;
-    top: 12px;   
-    color:black;
-    z-index: -1;
-     
-}
-.signupBtn, .createAccBtn, .signAllOutBtn {
-    /* background: #0d6efd; */
-    color:white !important;  
-    border-radius: 8px !important;
-    border: none;
-}
-
-.signupBtn{
-    background: #0d6efd;
-}
-.createAccBtn{
-    /* background: #6a994e; */
+.complementary-btns {
     color: black !important;
     background: none !important;
+    border: none;
+    border-radius: 8px;
 }
-.signAllOutBtn {
-    /* background: #ae2012; */
-    color:black !important;
-    background: none
-}
-.signupBtnFont {
-    font-weight: 700;
-}
-.signupBtn:hover {
-    opacity: 0.9;   
-}
-.createAccBtn:hover, .signAllOutBtn:hover {
-    /* opacity: 0.9; */
+
+.complementary-btns:hover {
     background: lightgray!important;
 }
 

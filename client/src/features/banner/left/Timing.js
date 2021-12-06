@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sessionStatusChanged, sessionParamsChanged, isTimerRunningChanged, timer } from "../../../layout/loggedIn/banner/sessionsSlice";
+import { sessionStatusChanged, sessionParamsChanged, isTimerRunningChanged, timer } from "./sessionsSlice";
 import { duration } from "../../../utils/time/duration";
 import { leftBanner } from "../../../utils/icons/banner/leftBanner";
+import { leftBannerToolTipsEn } from "../../../languages/english/leftBanner";
 
 export const TimerRunning = ({isTimerRunningLocal, setIsTimerRunningLocal, sessionParamsLocal, secsToMins}) => {
     const dispatch = useDispatch()
@@ -13,22 +14,25 @@ export const TimerRunning = ({isTimerRunningLocal, setIsTimerRunningLocal, sessi
     const titleStyle = {
         color: isTimerRunningLocal ? "#0d6efd" : "#d00000"
     }
+    const { playIcon, playFilled, pauseIcon, pauseFilled } = leftBanner
+
+    const { play_text, pause_text } = leftBannerToolTipsEn
     return (
       <>
        <li className = "nav-item me-3">
             <div className="toolTip button d-flex justify-content-center align-items-center border-white">
                 <button className = "button p-0" onClick = {!isTimerRunningLocal && handleClick}>
-                    { isTimerRunningLocal ? leftBanner.playFilled() : leftBanner.play()}
+                    { isTimerRunningLocal ? playFilled() : playIcon()}
                 </button>
-                <span className = "tooltiptext"> Play </span>
+                <span className = "toolTip-text"> {play_text} </span>
             </div>
         </li>
         <li className = "nav-item me-3">
             <div className="toolTip d-flex justify-content-center align-items-center border-white">
                 <button className = "button p-0" onClick = {isTimerRunningLocal && handleClick}> 
-                    { isTimerRunningLocal ? leftBanner.pause() : leftBanner.pauseFilled()}
+                    { isTimerRunningLocal ? pauseIcon() : pauseFilled()}
                 </button>
-                <span className = "tooltiptext"> Pause </span>
+                <span className = "toolTip-text"> {pause_text} </span>
             </div>
         </li>
         <li className = "nav-item d-flex">
@@ -51,6 +55,8 @@ export default function Timing() {
         breakInterval,
         focusInterval,
     } = useSelector(state => state.sessions)
+
+    
     const [ sessionParamsLocal, setSessionParamsLocal ] = useState(null)
     const [ isTimerRunningLocal, setIsTimerRunningLocal ] = useState(isTimerRunning)
     useEffect (() => {
@@ -81,7 +87,6 @@ export default function Timing() {
 
   //Step 2: Step up nextTick function with a parameter "preState"
   const nextTick = (prevState) => {
-    // const timeRemaining = Math.max(0,prevState.timeRemaining - 1)
     const timeElapsed = Math.min(prevState.interval*60,prevState.timeElapsed + 1)
     const timeElapsedPercent = timeElapsed/(prevState.interval*60)*100
     const session = {
@@ -91,7 +96,6 @@ export default function Timing() {
     }
     timer.saveSessionParams(session)
     dispatch(sessionParamsChanged(session))
-    // dispatch(sessionStatusChanged)
     return session
   }  
   
@@ -115,59 +119,53 @@ export default function Timing() {
     }
   //Step5: call the useInterval function: if play (istimerRunning): delay 1s, and run the call back function to set state of session with label and timeremining decrementing by 1
     useInterval(() => {
-      // if (session.timeRemaining === 0) {
-    //   if (session.timeElapsedPercent === 100) {
       if (sessionParamsLocal?.timeElapsedPercent === 100) {
         console.log("voice")
         return setSessionParamsLocal(nextSession(focusInterval, breakInterval))
       }
       return setSessionParamsLocal(nextTick)
     }, 
-    // isTimerRunning ? 1000 : null
     isTimerRunningLocal ? 1000 : null
     )
- 
-
     const secsToMins = duration.secToMin(sessionParamsLocal?.timeElapsed)
     const handleStop = (event) => { 
         event.preventDefault();
         setIsTimerRunningLocal(() => false);
         dispatch(isTimerRunningChanged(false))    
         setSessionParamsLocal(()=>null);
-        timer.dltSessionParams();
         timer.dltBreak();
         timer.dltFocus();
         timer.saveSessionStatus(false)
         dispatch(sessionStatusChanged(false))
+        dispatch(sessionParamsChanged(null))
     }
 
     return (
     <ul className = "nav">
-    <li className = "nav-item me-3">  
-        <button className = "button"> logo
-        </button>
-    </li>
-    <li className = "nav-item me-3">           
-        <div className="toolTip d-flex justify-content-center align-items-center border-white">
-                <form 
-                >
-                <button className = "button p-0"
-                    id = "home"
-                    type = "submit"
-                    onClick = {handleStop}
-                    >
-                    {leftBanner.home()}
-                    {/* <Home /> */}
-                </button>
-                </form>
-                <span className = "tooltiptext"> Home </span>
-        </div>
-    </li>
-    <TimerRunning isTimerRunningLocal = {isTimerRunningLocal} 
-                    secsToMins = {secsToMins}
-                    sessionParamsLocal = {sessionParamsLocal}    
-                    setIsTimerRunningLocal = {setIsTimerRunningLocal}
-    />
-</ul>
+      <li className = "nav-item me-3">  
+          <button className = "button"> logo
+          </button>
+      </li>
+      <li className = "nav-item me-3">           
+          <div className="toolTip d-flex justify-content-center align-items-center border-white">
+                  <form 
+                  >
+                  <button className = "button p-0"
+                      id = "home"
+                      type = "submit"
+                      onClick = {handleStop}
+                      >
+                      {leftBanner.homeIcon()}
+                  </button>
+                  </form>
+                  <span className = "toolTip-text"> {leftBannerToolTipsEn.home_text} </span>
+          </div>
+      </li>
+      <TimerRunning isTimerRunningLocal = {isTimerRunningLocal} 
+                      secsToMins = {secsToMins}
+                      sessionParamsLocal = {sessionParamsLocal}    
+                      setIsTimerRunningLocal = {setIsTimerRunningLocal}
+      />
+    </ul>
     
     )}

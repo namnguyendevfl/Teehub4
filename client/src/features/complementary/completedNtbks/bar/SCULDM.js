@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { complementary } from "../../../../utils/icons/complementary/Complementary";
 import { setSCULDM } from "../../../../layout/loggedIn/complementaries/complementariesSlice";
 import { popupChanged } from "../../../../layout/layoutAltersSlice";
+import { ntbkToolTipsEn } from "../../../../languages/english/complementary";
 
 export default function SCULDM() {
     const dispatch = useDispatch()
@@ -10,33 +11,23 @@ export default function SCULDM() {
         dispatch(popupChanged(id))
         dispatch(setSCULDM(id))
     }
+    const { searchIcon, plusIcon, trashIcon, listIcon, threeDotIcon } = complementary
+    const { search_text, create_text, delete_text, update_text, more_text } = ntbkToolTipsEn
+    const btns = [ [searchIcon(), search_text], [plusIcon(), create_text], [trashIcon(), delete_text], [listIcon(), update_text], [threeDotIcon(), more_text]]
+    const btnList = btns.map((btn,idx) => {
+        return ( 
+            <div key = {idx} className = "toolTip ms-1 ntbkBtn" >
+            <button className = "p-0 btn" onClick = {handleClick} >
+                {btn[0]}
+            </button>
+            {/* toolTip-complementary in complementary.css  */}
+            <span className = "toolTip-text toolTip-complementary" > {btn[1]} </span>
+        </div>
+        )
+    })
     return (
         <>
-            <div className = "ms-1 ntbkBtn mt-1" >
-                <button className = "p-0 ntbkBtn" id = "search" onClick = {handleClick} >
-                    {complementary.search()}
-                </button>
-            </div>                       
-            <div className = "ms-1 ntbkBtn mt-1">
-                <button className = "p-0 ntbkBtn" id = "add" onClick = {handleClick}    >
-                    {complementary.plus()} 
-                </button>
-            </div>                   
-            <div className = "ms-1 ntbkBtn mt-1">
-                <button className = "p-0 ntbkBtn" id= "trash" onClick = {handleClick} >
-                    {complementary.trash()}
-                </button>
-            </div>                   
-            <div className = "ms-1 ntbkBtn mt-1">
-                <button className = "p-0 ntbkBtn" id = "list" onClick = {handleClick} > 
-                    {complementary.list()}
-                </button>
-            </div>                          
-            <div className = "ms-1 ntbkBtn mt-1">
-                <button className = "p-0 ntbkBtn" id = "more" onClick = {handleClick} >
-                    {complementary.threeDot()}
-                </button>
-            </div>
+        {btnList}
         </>
     )
 

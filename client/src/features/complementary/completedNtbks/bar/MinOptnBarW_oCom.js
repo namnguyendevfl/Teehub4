@@ -40,40 +40,40 @@ export default function MinOptnBarW_oCom() {
         // setNtbkStyle(() => newStyle);
     }
     const { ntbks_chaps_topics: { showFullOptionBarWithComHided } } = useSelector(state => state.complementaries)
-    // const { chapterSelected } = useSelector(state => state.chapters)
+
+    const { editIcon, escapeIcon, boxArrowDownLeftIcon } = complementary
     return( !showFullOptionBarWithComHided && !show &&
     <div className = "d-flex align-items-center justify-content-end">
         <div className = "ms-1 offsetNtbkBtn mt-1" onMouseEnter = {handleMouseEnter}  onMouseLeave = {handleMouseLeave} > 
-            <div className = "ntbkEscapeFromExpand p-0">  </div>                                                        
-            <div className = "ntbkBtnExpandToRightBg" >
-                <button className = "p-0 ntbkBtnExpandToRight" 
+            <div className = "ntbk-escape-from-expand p-0">  </div>                                                        
+            <div className = "ntbkBtn-expand-to-right-bg" >
+                <button className = "p-0 ntbkBtn-expand-to-right" 
                     // style = {btnStyleAfterEdit}
                     style = {btnStyle} 
                     onClick = {(e) => {
                         dispatch(editStatusChanged())
                     }} >
-                    {!edit ? complementary.edit() : complementary.escape()}
+                    {!edit ? editIcon() : escapeIcon()}
                 </button>
             </div>
         </div>                
         { 
             !edit &&
-                <div className = "ms-1 offsetNtbkBtn mt-1" onMouseEnter = {handleMouseEnter}  onMouseLeave = {handleMouseLeave} > 
-                    <div className = "ntbkEscapeFromExpand p-0">  </div>                                                        
-                    <div className = "ntbkBtnExpandToRightBg" >
-                        <button className = "p-0 ntbkBtnExpandToRight" 
+                <div className = "ms-1 offset-ntbkBtn mt-1" onMouseEnter = {handleMouseEnter}  onMouseLeave = {handleMouseLeave} > 
+                    <div className = "ntbk-escape-from-expand p-0">  </div>                                                        
+                    <div className = "ntbkBtn-expand-to-right-bg" >
+                        <button className = "p-0 ntbkBtn-expand-to-right" 
                             style = {btnStyle} 
                             onClick = {(e) => handleMaximizeOptnBox(e)} >
-                            {complementary.boxArrowDownLeft()}
+                            {boxArrowDownLeftIcon()}
                         </button>
                     </div>
                 </div>
         }
-        <div className = "ms-1 me-2 offsetNtbkBtn mt-1" onMouseEnter = {handleMouseEnter}  onMouseLeave = {(e) => handleMouseLeave(e)} > 
-            <div className = "ntbkEscapeFromExpand p-0">  </div>                                                        
-            <div className = "ntbkBtnExpandToRightBg" 
-            >
-                <button className = "p-0 ntbkBtnExpandToRight" 
+        <div className = "ms-1 me-2 offset-ntbkBtn mt-1" onMouseEnter = {handleMouseEnter}  onMouseLeave = {(e) => handleMouseLeave(e)} > 
+            <div className = "ntbk-escape-from-expand p-0">  </div>                                                        
+            <div className = "ntbkBtn-expand-to-right-bg" >
+                <button className = "p-0 ntbkBtn-expand-to-right" 
                     // style = {btnStyleAfterEdit} 
                     style = {btnStyle} 
                     onClick = {(e) => handleOpenCom(e)}              

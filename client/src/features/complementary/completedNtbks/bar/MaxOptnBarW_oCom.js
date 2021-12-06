@@ -34,13 +34,13 @@ export default function MaxOptnBarW_oCom(props) {
             <>
                 <div className = "d-flex align-items-center justify-content-center">
                     <SCULDM /> 
-                    <div className = "ms-1 ntbkBtn mt-1">
-                        <button className = "p-0 ntbkBtn" onClick = {handleMinimizeOptnBox} >
-                            {complementary.boxArrowUpRight()}               
+                    <div className = "ms-1 btn mt-1">
+                        <button className = "p-0 btn" onClick = {handleMinimizeOptnBox} >
+                            {complementary.boxArrowUpRightIcon()}               
                         </button>
                     </div>
-                    <div className = "mx-1 ntbkBtn mt-1" >   
-                        <button className = "p-0 ntbkBtn"                               
+                    <div className = "mx-1 btn mt-1" >   
+                        <button className = "p-0 btn"                               
                             onClick = { handleOpenCom}
                         > 
                             {main.leftChevron()}

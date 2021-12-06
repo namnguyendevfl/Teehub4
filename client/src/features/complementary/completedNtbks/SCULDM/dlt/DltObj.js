@@ -9,6 +9,8 @@ import { complementary } from "../../../../../utils/icons/complementary/Compleme
 import { dltObj } from "../../../../main/completedNtbks/apiNtbksComplete";
 import { dltTopic, selectTopicById, selectTopicIds } from "../../../../main/completedNtbks/topics/topicsSlice";
 import { popupChanged } from "../../../../../layout/layoutAltersSlice";
+import { SCULDMTitlesEn } from "../../../../../languages/english/ntbks";
+import { generalTitles } from "../../../../../languages/english/generalTitles";
 
 export const ListItem = ({id, option, url, setItemsDlted, setOptionIds}) => {
     const item = useSelector(state => {
@@ -22,7 +24,6 @@ export const ListItem = ({id, option, url, setItemsDlted, setOptionIds}) => {
         return item.topic_title
     })()
   
-    const dispatch = useDispatch();
     const handleDlt = () => {
         setItemsDlted((prevItemsDlted) => [...prevItemsDlted,item])
         setOptionIds(prevIds => prevIds.filter(prevId => prevId !== item.id))
@@ -34,7 +35,7 @@ export const ListItem = ({id, option, url, setItemsDlted, setOptionIds}) => {
                 className = "ntbkBtn d-flex align-items-center justify-content-center"
                 onClick = {handleDlt}
                 > 
-            {complementary.trash()}
+            {complementary.trashIcon()}
         </button>
         </li>
     )}
@@ -45,15 +46,16 @@ export default function DltObj({option}) {
         recentUrl.saveUrl(url)
     },[])
     const [ itemsDlted, setItemsDlted ] = useState([]);
-    const navigate = useNavigate()
     const [ error, setError ] = useState(null)
     const ntbkIds = useSelector(selectNtbkIds);
     const chapterIds = useSelector(selectChapterIds)
     const topicIds = useSelector(selectTopicIds) 
+    const { dlt_ntbk_text, dlt_chapter_text, dlt_topic_text} = SCULDMTitlesEn
+
     const initialState = (() => {
-        if ( option === "notebooks" ) return {ids: ntbkIds, actionTitle: "Delete Notebook"}
-        if ( option === "chapters" ) return {ids: chapterIds, actionTitle: "Delete Chapter"}
-        return {ids: topicIds, actionTitle: "Delete Topic"}
+        if ( option === "notebooks" ) return {ids: ntbkIds, actionTitle: dlt_ntbk_text}
+        if ( option === "chapters" ) return {ids: chapterIds, actionTitle: dlt_chapter_text}
+        return {ids: topicIds, actionTitle: dlt_topic_text}
     })
     useEffect(() => {
         setItemsDlted(() => [])
@@ -107,26 +109,26 @@ export default function DltObj({option}) {
         <>
             <div className="row d-flex text-aligns-center m-0 justify-content-center">
             <div className = "col-2"></div>
-            <h5 className = "ntbkOptnBoxTitle col-8 text-center text-dark m-0">{initialState().actionTitle}</h5>
+            <h5 className = "my-3 col-8 text-center text-dark m-0">{initialState().actionTitle}</h5>
             <div className = "col-2 m-0 d-flex align-items-center justify-content-end">
-                <button className = "ntbkBtn d-flex align-items-center p-2 " onClick ={handleEscape} >
-                    {complementary.escape()}
+                <button className = "btn d-flex align-items-center p-2 " onClick ={handleEscape} >
+                    {complementary.escapeIcon()}
                 </button>
             </div>
         </div>
-        <hr className =" m-0 p-0"/>
-        <div className = "ntbkOptnBoxList">
+        <hr className ="m-0 p-0"/>
+        <div className = "ntbk-popup-segment-middle m-1 my-3 me-3">
             <ul className = "list-group">
                 {renderedList}
             </ul>
         </div>
-        <div className = "position-absolute bottom-0 text-center w-100 px-3">
+        <div className = "position-absolute text-center w-100 px-3">
         <button 
-            className = "mb-3 saveNtbk list-group-item w-100 d-flex align-items-center justify-content-center text-center "
+            className = "submit-btn mb-3 list-group-item w-100 d-flex align-items-center justify-content-center text-center "
             type = "submit"
             onClick = {handleSubmit} 
             >
-            Save
+            <strong> {generalTitles.save_text} </strong>
         </button>
         </div>
       

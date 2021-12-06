@@ -26,7 +26,7 @@ export default function LoggedIn(props) {
         width: "100%",
         position: "fixed",
         background: "white",
-        zIndex: "1",
+        zIndex: "3",
         // border: "2px solid"
     }
 
@@ -39,7 +39,7 @@ export default function LoggedIn(props) {
         zIndex: "1"
     }
     const styleMain = {
-        top: "80px",
+        top: "77px",
         bottom:"0",
         position:"absolute",
         // overflowY:"scroll",

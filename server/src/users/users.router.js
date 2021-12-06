@@ -9,4 +9,11 @@ router
 .get(controller.readUserLoggingIn)
 .all(methodNotAllowed)
 
+
+router
+.route("/")
+.get(controller.listUsers)
+.post(controller.create)
+.all(methodNotAllowed)
+
 module.exports = router

@@ -1,0 +1,23 @@
+export const signupNLoginEn = {
+    signup_title_text: "Create your account",
+    login_title_text: "Log in",
+    first_name_text: "First name",
+    sur_name_text: "Last name",
+    user_name_text: "Phone or email",
+    password_text: "Password",
+    birthday_text:"Birthday",
+    birthday_policy_text:" This will not be shown publicly unless you set to do so. Confirm your age to help make sure you get the appropriate content",
+    age_month_text: "Month",
+    age_day_text: "Day",
+    age_year_text: "Year",
+    age_text:"Age",
+    use_age_text: "Use age instead",
+    use_DOB_text: "Use date of birth instead",
+    signup_text: "Sign up",
+    remember_pass_text: "Remember password",
+    guest_mode_text: "Guest mode",
+    forgot_pass_text: "Forgot password",
+    recent_loggedIns_text: "Recent Logins",
+    sign_all_out_text: "Sign all out",
+    create_account_text: "Create account"
+}

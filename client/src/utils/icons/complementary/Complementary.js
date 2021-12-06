@@ -1,12 +1,9 @@
-export const Switch = (props) => {
+export const SwitchIcon = (props) => {
         const { 
-                switchNtbk,
-                switchChap, 
                 option           
         } = props
 
         const id = () => {
-                // return "switchNtbkNChapter"
                 if (option === "ntbks") return "switchNtbk"
                 else return "switchChap"
         };
@@ -22,7 +19,7 @@ export const Switch = (props) => {
                 d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
         </svg>
         }
-export const CaretDown = (props) => {
+export const CaretDownIcon = (props) => {
         const {
         topicsDropdown,
         } = props
@@ -42,7 +39,7 @@ export const CaretDown = (props) => {
 }
 
 export const complementary = {
-    threeDot: () => <svg xmlns="http://www.w3.org/2000/svg" 
+    threeDotIcon: () => <svg xmlns="http://www.w3.org/2000/svg" 
                 width="16" height="16" 
                 fill="currentColor" 
                 class="bi bi-three-dots" 
@@ -53,7 +50,7 @@ export const complementary = {
                         id = "more"
                         />
         </svg>,
-    search: () => <svg xmlns="http://www.w3.org/2000/svg" 
+    searchIcon: () => <svg xmlns="http://www.w3.org/2000/svg" 
                 width="16" height="16" 
                 fill="currentColor" className="bi bi-search" 
                 viewBox="0 0 16 16"
@@ -63,7 +60,7 @@ export const complementary = {
                         id = "search"
                 />
         </svg>,
-    plus: () => <svg xmlns="http://www.w3.org/2000/svg" 
+    plusIcon: () => <svg xmlns="http://www.w3.org/2000/svg" 
                 width="31" height="27" 
                 fill="currentColor" class="bi bi-plus" 
                 viewBox="0 0 16 16"
@@ -73,7 +70,7 @@ export const complementary = {
                 id = "add"
                 />
         </svg>,
-    trash: () => <svg xmlns="http://www.w3.org/2000/svg" 
+    trashIcon: () => <svg xmlns="http://www.w3.org/2000/svg" 
                 width="16" height="16" 
                 fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"
                 id = "trash"
@@ -87,7 +84,7 @@ export const complementary = {
                 id = "trash"
                 />
                 </svg>,
-    edit: () => <svg xmlns="http://www.w3.org/2000/svg" 
+    editIcon: () => <svg xmlns="http://www.w3.org/2000/svg" 
                 width="16" height="16" fill="currentColor" 
                 class="bi bi-pencil-square" viewBox="0 0 16 16"
                 id = "edit"
@@ -99,7 +96,7 @@ export const complementary = {
                 id = "edit"
                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                 </svg>,
-    escape : () => <svg xmlns="http://www.w3.org/2000/svg" 
+    escapeIcon : () => <svg xmlns="http://www.w3.org/2000/svg" 
                 width="16" height="16" fill="currentColor" class="bi bi-x-lg" 
                 viewBox="0 0 16 16">
                 <path fill-rule="evenodd" 
@@ -107,7 +104,7 @@ export const complementary = {
                 <path fill-rule="evenodd" 
                 d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
                 </svg>,
-    list : () => <svg xmlns="http://www.w3.org/2000/svg" 
+    listIcon : () => <svg xmlns="http://www.w3.org/2000/svg" 
                 width="16" height="16" fill="currentColor" 
                 class="bi bi-list-ol" viewBox="0 0 16 16"
                 id = "list"
@@ -119,13 +116,13 @@ export const complementary = {
                 id = "list"
                 d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zm-.004-4.699h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338v.041zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635V5z"/>
                 </svg>,
-    arrowBarLeft : () =>  <svg xmlns="http://www.w3.org/2000/svg" 
+    arrowBarLeftIcon : () =>  <svg xmlns="http://www.w3.org/2000/svg" 
                 width="16" height="16" 
                 fill="currentColor" class="bi bi-arrow-bar-left" 
                 viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"/>
                 </svg>,
-    leftArrow : () => <svg xmlns="http://www.w3.org/2000/svg" 
+    leftArrowIcon : () => <svg xmlns="http://www.w3.org/2000/svg" 
                 width="30" height="25" 
                 fill="currentColor" className="bi bi-arrow-left-short" 
                 viewBox="0 0 16 16"  
@@ -133,7 +130,7 @@ export const complementary = {
                 <path fill-rule="evenodd" 
                 d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
                 </svg>,
-    boxArrowDownLeft : () => <svg xmlns="http://www.w3.org/2000/svg" 
+    boxArrowDownLeftIcon : () => <svg xmlns="http://www.w3.org/2000/svg" 
                 width="16" height="16" 
                 fill="currentColor" class="bi bi-box-arrow-in-down-left" 
                 viewBox="0 0 16 16">
@@ -142,7 +139,7 @@ export const complementary = {
                 <path fill-rule="evenodd" 
                 d="M5 10.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1H6.707l8.147-8.146a.5.5 0 0 0-.708-.708L6 9.293V5.5a.5.5 0 0 0-1 0v5z"/>
                 </svg>,
-    boxArrowUpRight: () => <svg xmlns="http://www.w3.org/2000/svg" 
+    boxArrowUpRightIcon : () => <svg xmlns="http://www.w3.org/2000/svg" 
                 width="16" height="16" fill="currentColor" 
                 class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" 

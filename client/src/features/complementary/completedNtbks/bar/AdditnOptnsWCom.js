@@ -7,18 +7,9 @@ import { editStatusChanged, showComplementaryChanged, showFullOptionBarWithComHi
 
 export default function AdditnalOptnsWCom(props) {
     const dispatch = useDispatch()
+    const { escapeIcon, editIcon } = complementary
     const [ btnStyle, setBtnStyle ] = useState({display: 'none'})
-    const { show, ntbks_chaps_topics: { edit } } = useSelector(state => state.complementaries)
-    // const rChevronStyleWhenEditng = {
-    //     position: "absolute",
-    //     left: "-53px",
-    //     top: "4px",
-    // }
-    // const escapeStyleWhenEditng = {
-    //     position: "absolute",
-    //     left: "-90px",
-    //     top: "4px",
-    // }
+    const { ntbks_chaps_topics: { edit } } = useSelector(state => state.complementaries)
     const handleMouseEnter = (e) => {
         setBtnStyle ({display: 'flex'});    
     } 
@@ -29,73 +20,33 @@ export default function AdditnalOptnsWCom(props) {
         dispatch(showComplementaryChanged())
         dispatch(showSwitchTabsChanged(false))
         dispatch(showFullOptionBarWithComHidedChanged(false))
-        const ntbkStyle = {
-            color:"black", 
-            boxShadow:"none", 
-            background:"none", 
-            width:"260px"
-        }
-        // setNtbkStyle(() => ntbkStyle);
         }
     return(
         <>
-        {/* { ntbkEdit &&
-        <>
-            <div className = "p-0 mt-1" >                        
-                <div    className = "p-0" >                   
-                    <button className = "ntbkBtnExpandToRight p-0"                                                               
-                        style = {rChevronStyleWhenEditng}
-                        onClick = {(e) => handleHideCom(e)}
+            <div className = "ntbk-expand-to-right p-0 mt-1" 
+                    onMouseEnter = {handleMouseEnter}  
+                    onMouseLeave = {handleMouseLeave} >                          
+                <div className = "ntbkBtn-expand-to-right-bg p-0" >                   
+                    <button className = "ntbkBtn-expand-to-right p-0"                                                                
+                        style = {btnStyle}
+                        onClick = {handleHideCom}
                     > 
                     {main.rightChevron()}
                     </button>
                 </div>                         
             </div> 
-            <div className = "p-0 mt-1 me-2" 
-                onMouseEnter = {(e) => handleMouseEnter(e)}  
-                onMouseLeave = {(e) => handleMouseLeave(e)} >                          
-                <div    className = "p-0" >                   
-                    <button className = "ntbkBtnExpandToRight p-0"                                                             
-                        style = {escapeStyleWhenEditng}
-                        onClick = {(e) => {
-                            setNtbkEdit(() => !ntbkEdit);              
-                        }}
-                    > 
-                    {!ntbkEdit ? complementary.edit() : complementary.escape() }
-                    </button>
-                </div>                        
-            </div> 
-        </> 
-        }
-        {!ntbkEdit &&
-        <> */}
-            <div    className = "ntbkExpandToRight p-0 mt-1" 
-                    onMouseEnter = {(e) => handleMouseEnter(e)}  
-                    onMouseLeave = {(e) => handleMouseLeave(e)} >                          
-                <div    className = "ntbkBtnExpandToRightBg p-0" >                   
-                    <button className = "ntbkBtnExpandToRight p-0"                                                                
+            <div  className = "ntbk-edit-to-right p-0 mt-1" 
+                onMouseEnter = {handleMouseEnter}  
+                onMouseLeave = {handleMouseLeave} >                          
+                <div    className = " ntbkBtn-expand-to-right-bg p-0" >                   
+                    <button className = "ntbkBtn-expand-to-right p-0"   
+                                                                          
                         style = {btnStyle}
-                        onClick = {(e) => handleHideCom(e)}
+                        onClick = {(e) => { dispatch(editStatusChanged())}}
                     > 
-                    {main.rightChevron()}
-                    </button>
-                </div>                         
-            </div> 
-            <div  className = "ntbkEditToRight p-0 mt-1" 
-                onMouseEnter = {(e) => handleMouseEnter(e)}  
-                onMouseLeave = {(e) => handleMouseLeave(e)} >                          
-                <div    className = "ntbkBtnExpandToRightBg p-0" >                   
-                    <button className = "ntbkBtnExpandToRight p-0"                                                                
-                        style = {btnStyle}
-                        onClick = {(e) => {
-                        dispatch(editStatusChanged())
-                        }}
-                    > 
-                    {!edit ? complementary.edit() : complementary.escape() }
+                    {!edit ? editIcon() : escapeIcon() }
                     </button>
                 </div>                    
             </div> 
-        {/* </>
-        } */}
     </> 
     )}

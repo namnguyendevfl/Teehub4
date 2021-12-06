@@ -11,10 +11,12 @@ export default function Complementaries() {
             if (show) {
                 return {
                     background: "none",
+                    width:"auto"
                 }
             } return {
                 background: "none",
-                    right:"4px",  
+                right: "4px", 
+                width: "auto" 
             } 
         }
         if (show) {

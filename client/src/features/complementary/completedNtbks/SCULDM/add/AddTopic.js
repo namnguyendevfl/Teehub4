@@ -21,7 +21,7 @@ const AddContent = (props) => {
         }))
     };
 
-
+    const { leftArrowIcon, escapeIcon, listIcon, } = complementary
     return (
         <>
      <div className="row d-flex text-aligns-center m-0 justify-content-center">  
@@ -29,7 +29,7 @@ const AddContent = (props) => {
             <button className = "ntbkBtn d-flex align-items-center p-0 "
                     onClick = {(e) => setDisplayContent(() => !displayContent)}
             >
-                {complementary.leftArrow()}
+                {leftArrowIcon()}
             </button>
         </div>
         <h5 className = "ntbkOptnBoxTitle col-8 text-center m-0 ">
@@ -39,7 +39,7 @@ const AddContent = (props) => {
             <button className = "ntbkBtn d-flex align-items-center p-2 "
                     onClick = {handleEscape}
             >
-                {complementary.escape()}
+                {escapeIcon()}
             </button>
         </div>
     </div>
@@ -69,7 +69,7 @@ const AddContent = (props) => {
                             setDisplayAddOption (() => !displayAddOption);
                         }}
                 >
-                    {complementary.list()}
+                    {listIcon()}
                 </button>
 
                 </div>
@@ -130,11 +130,10 @@ export default function AddTopic(props){
         })
         .catch(setError)
     };
-
     const handleEscape = (e) => {
         dispatch(popupChanged(false))
-        // dispatch(setCULDSMBoxDropDown(false))
     }
+    const { escapeIcon, listIcon } = complementary
     return (
         <> 
         {
@@ -147,7 +146,7 @@ export default function AddTopic(props){
                     <button className = "ntbkBtn d-flex align-items-center p-2 "
                             onClick = {handleEscape}
                     >
-                        {complementary.escape()}
+                        {escapeIcon()}
                     </button>
                 </div>
             </div>
@@ -174,7 +173,7 @@ export default function AddTopic(props){
                                         setDisplayAddOption (() => !displayAddOption);
                                     }}
                             >
-                                {complementary.list()}
+                                {listIcon()}
                             </button>
                         </div>
                     </div>

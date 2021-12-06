@@ -2,38 +2,152 @@ import React, { useEffect } from "react";
 import  useState  from 'react-usestateref'
 import { useSelector, useDispatch } from "react-redux";
 import Errors from "../../../errors/errors";
-import { boxStyle } from "../../../utils/styles/boxStyle";
-import { saveLoggedIn, saveRecentLoggedIn } from "./loggedInsSlice";
+import { loggedInsLcalStorage, saveLoggedIn, saveRecentLoggedIn } from "./loggedInsSlice";
 import { postUserLoggingIn, readUserLoggingIn } from "./loginApis";
+import { signupNLoginEn } from "../../../languages/english/signupNLogin";
+import { elementFocused } from "../../../utils/styles/elementFocused";
+import { appIcons } from "../../../utils/icons/generalIcons/generalIcons";
+import { popupChanged } from "../../../layout/layoutAltersSlice";
+import { rightBanner } from "../../../utils/icons/banner/rightBanner";
+
+
 export const UserLoggingIn = () => {
-    const { userLoggingIn: {user_name, password} } = useSelector(state => state.logins)
+    const { userLoggingIn: { user_name, password } } = useSelector(state => state.logins)
     return { user_name: user_name,
         password: password
     }
 }
 
-export default function LoginForm(props){
-    const {
-        displayLoginPopup,
-        setDisplayLoginPopup
-    } = props
+const UserLoggedIn = ({ handleEscape, user}) => {
+    return (
+        <>
+        <div className ="row mx-0 my-1 d-flex align-items-center justify-content-between">
+            {/* Create empty div to make the escape btn stay on the R corner */}
+            <div className = "col-2"></div>
+            <div  className ="col"> </div>
+            <div  className = "col-2 d-flex justify-content-end">
+                <div className ="btn"> 
+                    <button className ="btn"
+                        onClick = {handleEscape}
+                    >
+                        {appIcons.escape()}
+                    </button>                   
+                </div>
+            </div>
+        </div>
+        <div>
+            <div className = "text-center mt-2">
+                {rightBanner.avaLogin()}
+            </div>
+            <div className = "text-center mt-2">
+                <strong> {user.first_name} {user.sur_name} </strong>
+            </div>
+        </div> 
+        </>
+    )
+}
   
-    const dispatch = useDispatch()
-    const ids = ['user_name', 'password']
-    const [ clickedId, setClickedId, clickedIdRef] = useState()
-    const initialLogin = {
-        user_name:" ",
-        password:"",
-    }
 
-    const [found, setFound ] = useState(false)
+const LoginPassword = ({user, handleChange, handleClick}) => {
+    const { login_title_text, password_text, remember_pass_text, guest_mode_text, forgot_pass_text, } = signupNLoginEn
+    return (
+        <>
+            <div className = "d-flex px-3 pt-3">
+                <label htmlFor = " password"> </label>
+                <input
+                    className = "account-signup-N-login px-1 w-100 px-2"
+                    id = "password_login"
+                    name = "password"
+                    type = "password"
+                    placeholder = {password_text}
+                    value = {user.password}
+                    onChange = {handleChange}
+                    onClick = {handleClick}
+                    onKeyUp = {handleClick}
+                    // required = "true"
+                >
+                </input>
+            </div>
+            <div className = "pb-1"> 
+            </div>
+            {/* <div className="text-start px-2 d-flex justify-content-start align-items-center"
+                style = {{height: "25px"}}
+            >
+                <input
+                    style = {{
+                        width:"32px"
+                    }}
+                    type = "checkbox"
+                    id = "remember_pass"
+                    name = "remember_pass"
+                    onChange={handleChange}
+                    onKeyUp = {handleClick}
+                    checked={user.remember_pass}
+                    value="rememberPass"                
+                ></input>
+                <label className = "px-2" htmlFor = "rememberPass">{remember_pass_text}</label>
+            </div> */}
+            <div className="text-start p-2 my-1 d-flex justify-content-start align-items-center"
+                style = {{height: "20px"}}
+            >
+                <input
+                    style = {{
+                        width:"32px"
+                    }}
+                    type = "checkbox"
+                    id = "guest_mode"
+                    name = "guest_mode"
+                    onChange={handleChange}
+                    onKeyUp = {handleClick}
+                    checked={user.guest_mode}
+                    value="guestMode"
+            
+                ></input>
+                <label className = "px-2" htmlFor = "guestMode">{guest_mode_text}</label>
+            </div>
+            <div className = "my-3"></div>
+            <div className = "my-2" style = {{height:"20px"}}> </div>
+            <div className ="d-flex justify-content-center"  >    
+                <a href = "" tabIndex = "-1">
+                    <span className ="text-center"  > {forgot_pass_text}</span>
+                </a>
+            </div>            
+            <div className = "m-3 mt-1 d-flex justify-content-center">
+                <button 
+                tabIndex = "-1"
+                className = "submit-btn list-group-item w-100 p-2"
+                type = "submit">
+                    <span className = "submit-btn-font"> {login_title_text}</span>
+                </button>
+            </div>
+        </>
+    )
+}
+
+//We need 2 login components, one for popup with known user_name and the other for general login. 
+//Created a password component so that it can be used in these two components
+
+export function LoginPopup () {
+    const dispatch = useDispatch()
+    //create an ids array and clickedId variable using useStateRef to set window.focus() on a clicked element and window.unfocus() on other elements
+    const ids = ['user_name_login', 'password_login']
+    const [ clickedId, setClickedId, clickedIdRef] = useState()
+    const { recentLoggedIn } = useSelector(state => state.loggedIns)
+    // console.log(recentLoggedIn)
+    const initialLogin = {
+        user_name: recentLoggedIn.user_name,
+        password:"",
+        remember_pass: false,
+        guest_mode: false
+    }
     const [ user, setUser, userRef ] = useState(initialLogin)
+    console.log(user)
     const handleClick = (e) => {
         setClickedId(() => e.target.id)
-        if (ids.includes(clickedIdRef.current)) boxStyle.focus(e.target.id)
+        if (ids.includes(clickedIdRef.current)) elementFocused.focus(e.target.id)
     }
     useEffect(() => {
-        ids.forEach((id, idx) => (id !== clickedId) && boxStyle.unFocus(id))
+        ids.forEach((id, idx) => (id !== clickedId) && elementFocused.unFocus(id))
     }, [clickedId])
     const [error, setError] = useState(null);
     const handleChange = ({target: {name, value, type, checked}}) => {
@@ -43,19 +157,101 @@ export default function LoginForm(props){
             [name]: value
         }))
     }
+    const handleEscape = (e) => {;
+        dispatch(popupChanged(false))
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const userLoggingIn = {
             user_name: user.user_name.trim(),
             password: user.password.trim()
         }
+        //Post the logging in user credential to the server to see what if the password inputted is correct
+        //If user credentials are correct, then request the server to send back "id" of the logging in user
+        //Then create a loggedIn obj with 2 keys including "id" and loggedin status
+        //Use redux "useDispatch" to save this new obj to the redux store and localstorage to persist the state of loggedin status
+
         postUserLoggingIn(userLoggingIn)
         .then()
         .then(() => 
             readUserLoggingIn(userLoggingIn)
             .then((result) => {
                 const loggedIn = {
-                    id: result.id,
+                    ...result,
+                    stayLoggedIn: true
+                }
+                dispatch(saveLoggedIn(loggedIn))
+                dispatch(saveRecentLoggedIn(loggedIn))
+                dispatch(popupChanged(false))
+            }))
+        .catch((err) => {
+            setError(err)
+        })
+    }
+    return (
+        <div className =""
+        >
+            <Errors error = {error}/>
+            <UserLoggedIn handleEscape = {handleEscape} user = {recentLoggedIn}/>
+            <div className = "signupBox">
+            <form onSubmit = {handleSubmit}> 
+                <LoginPassword user = {user} handleChange = {handleChange} handleClick = {handleClick}/>
+            </form>
+            </div>
+        </div>
+    )
+}
+
+export default function LoginForm(){
+    const dispatch = useDispatch()
+    //create an ids array and clickedId variable using useStateRef to set window.focus() on a clicked element and window.unfocus() on other elements
+    const ids = ['user_name_login', 'password_login']
+    const [ clickedId, setClickedId, clickedIdRef] = useState()
+    const initialLogin = {
+        user_name: "",
+        password:"",
+        remember_pass: false,
+        guest_mode: false
+    }
+
+    const [ user, setUser, userRef ] = useState(initialLogin)
+    console.log(user)
+    const handleClick = (e) => {
+        setClickedId(() => e.target.id)
+        if (ids.includes(clickedIdRef.current)) elementFocused.focus(e.target.id)
+    }
+    useEffect(() => {
+        ids.forEach((id, idx) => (id !== clickedId) && elementFocused.unFocus(id))
+    }, [clickedId])
+    const [error, setError] = useState(null);
+    const handleChange = ({target: {name, value, type, checked}}) => {
+        value = type === "checkbox" ? checked : value
+        setUser((prevUser) => ({
+            ...prevUser,
+            [name]: value
+        }))
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const userLoggingIn = {
+            user_name: user.user_name.trim(),
+            password: user.password.trim()
+        }
+        //Post the logging in user credential to the server to see what if the password inputted is correct
+        //If user credentials are correct, then request the server to send back "id" of the logging in user
+        //Then create a loggedIn obj with 2 keys including "id" and loggedin status
+        //Use redux "useDispatch" to save this new obj to the redux store and localstorage to persist the state of loggedin status
+
+        // loggedInsLcalStorage.dltLoggedIns()
+        postUserLoggingIn(userLoggingIn)
+        .then()
+        .then(() => 
+            readUserLoggingIn(userLoggingIn)
+            .then((result) => {
+                const loggedIn = {
+                    ...result,
                     stayLoggedIn: true
                 }
                 dispatch(saveLoggedIn(loggedIn))
@@ -65,133 +261,34 @@ export default function LoginForm(props){
             setError(err)
         })
     }
-    const loginBoxStyle = (() => {
-        if (displayLoginPopup) return {
-            position: "absolute",
-            width: "500px",
-            height: "380px",
-            zIndex: "7",
-            backgroundColor: "white",
-            borderRadius:"8px",
-            boxShadow: "0px 0px 5px 0.7px #6c757d",  
-            paddingTop:"20px"          
-        }
-    })()
+    const {
+        signup_title_text, login_title_text, first_name_text, sur_name_text, user_name_text, password_text,
+        birthday_text, birthday_policy_text, age_month_text, age_day_text, age_year_text, signup_text,
+        remember_pass_text, guest_mode_text, forgot_pass_text, recent_loggedIns_text, sign_all_out_text, create_account_text
+    } = signupNLoginEn
     return (
-        <div className =""
-            style = {loginBoxStyle}
-        >
+        <div>
             <Errors error = {error}/>
             <div className ="row mx-0 d-flex align-items-center justify-content-between">
-                <div className = "col-2"></div>
-                <h4  className ="col text-center"> Log in</h4>
-                <div  className = "col-2 d-flex justify-content-end">
-                {displayLoginPopup &&
-                    <div className ="btn"> 
-                        <button className ="btn"
-                            onClick = {(e) => setDisplayLoginPopup (() => !displayLoginPopup)}
-                        >
-                            {/* {complementary.escape()} */}
-                        </button>                   
-                    </div>
-                     }    
-                </div>
+                <h4  className ="col text-center"> {login_title_text}</h4>
             </div>
             <div className = "signupBox">
             <form onSubmit = {handleSubmit}> 
                 <div className = "d-flex px-3 pt-3">
                     <input
-                        className = "accountSignupInput px-2 w-100"
-                        id = "user_name"
+                        className = "account-signup-N-login px-2 w-100"
+                        id = "user_name_login"
                         name = "user_name"
-                        placeholder = "Phone or email"
+                        placeholder = {user_name_text}
                         type = "text"
-                        // value = {userLoggingIn.user_name}
                         value = {user.user_name}
                         onChange = {handleChange}
                         onClick = {handleClick}
-                        // onKeyDown = {handleKeyDown}
-                        // tabIndex = "0"
                         onKeyUp = {handleClick}
-                        // required = "true"
                     >
                     </input>
                 </div>
-                <div className = "d-flex px-3 pt-3">
-                    <label htmlFor = " password"> </label>
-                    <input
-                        className = "accountSignupInput px-1 w-100 px-2"
-                        id = "password"
-                        name = "password"
-                        type = "password"
-                        placeholder = "Password"
-                        // value = {userLoggingIn.password}
-                        value = {user.password}
-                        onChange = {handleChange}
-                        onClick = {handleClick}
-                        onKeyUp = {handleClick}
-                        // required = "true"
-                    >
-                    </input>
-                </div>
-                <div className = "pb-1"> 
-                </div>
-                {displayLoginPopup && <div style = {{ margin: "5px" }}> </div>}
-                <div className="text-start px-2 d-flex justify-content-start align-items-center"
-                    style = {{height: "25px"}}
-                >
-                    <input
-                        style = {{
-                            width:"32px"
-                        }}
-                        type = "checkbox"
-                        id = "remember_pass"
-                        name = "remember_pass"
-                        onChange={handleChange}
-                        onKeyUp = {handleClick}
-                        // checked={userLoggingIn.remember_pass}
-                        checked={user.remember_pass}
-                        value="rememberPass"                
-                    ></input>
-                    <label className = "px-2" htmlFor = "rememberPass">Remeber password</label>
-                </div>
-                {displayLoginPopup && <div style = {{ margin: "5px" }}> </div>}
-                <div className="text-start px-2 d-flex justify-content-start align-items-center"
-                    style = {{height: "20px"}}
-                >
-                    <input
-                        style = {{
-                            width:"32px"
-                        }}
-                        type = "checkbox"
-                        id = "guest_mode"
-                        name = "guest_mode"
-                        onChange={handleChange}
-                        onKeyUp = {handleClick}
-                        // checked={userLoggingIn.guest_mode}
-                        checked={user.guest_mode}
-                        value="guestMode"
-               
-                    ></input>
-                    <label className = "px-2" htmlFor = "guestMode">Guest mode</label>
-                </div>
-                <div className = "my-3">
-                </div>
-                {displayLoginPopup && <div style = {{ margin: "30px" }}> </div>}
-                <div className = "my-2"> </div>
-                <div className ="d-flex justify-content-center"  >    
-                    <a href = "" tabIndex = "-1">
-                        <span className ="text-center"  > Forgot password</span>
-                    </a>
-                </div>            
-                <div className = "m-3 mt-1 d-flex justify-content-center">
-                    <button 
-                    tabIndex = "-1"
-                    className = "signupBtn w-100 p-2"
-                    type = "submit">
-                        <span className = "signupBtnFont"> Log in</span>
-                    </button>
-                </div>
+                <LoginPassword user = {user} handleChange = {handleChange} handleClick = {handleClick} />
             </form>
             </div>
         </div>

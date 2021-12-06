@@ -1,6 +1,8 @@
-import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+import { createSlice, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { initState } from "../../../redux/getInitStates";
 
+
+//Create a variable to hold values in the localStorage 
 export const loggedInsLcalStorage = {
     getLoggedIns: () => JSON.parse(window.localStorage.getItem('loggedIns')),
     saveLoggedIns: (loginState) => window.localStorage.setItem('loggedIns', JSON.stringify(loginState)),
@@ -19,9 +21,11 @@ export const recentUrl = {
     dltUrl: () => localStorage.removeItem('url'),
 }
 
+const loggedIns = loggedInsLcalStorage.getLoggedIns() ? loggedInsLcalStorage.getLoggedIns() : []
+//used Redux toolkit to set up a normalized state structure for loggedIns
 const loggedInsAdapter = createEntityAdapter()
 const initialState = loggedInsAdapter.getInitialState({
-    ...initState(loggedInsLcalStorage.getLoggedIns()),
+    ...initState(loggedIns),
     recentLoggedIn: recentLoggedInLcalStorage.getLoggedIn()
 })
 
@@ -34,11 +38,17 @@ const loggedInsSlice = createSlice({
                 id: action.payload,
                 stayLoggedIn: false
             }
+            //save logeegOut status in the localstorage to persist its state 
             recentLoggedInLcalStorage.saveLoggedIn(loggedOut)
             state.recentLoggedIn = loggedOut
         },
         saveLoggedIn: (state, action) => {
             recentLoggedInLcalStorage.saveLoggedIn(action.payload)
+            //add new loggedIn to the localStorage 
+            if (!state.ids.includes(action.payload.id)) {
+                loggedIns.push(action.payload)
+                loggedInsLcalStorage.saveLoggedIns(loggedIns)
+            }
             loggedInsAdapter.addOne(state, action.payload)            
         },
         saveRecentLoggedIn: (state, action) => {
@@ -54,3 +64,16 @@ export const {
     loggedOut
 } = loggedInsSlice.actions
 export default loggedInsSlice.reducer
+
+export const {
+    selectAll: selectLoggedIns,
+    selectById: selectLoggedInById,
+} = loggedInsAdapter.getSelectors(state => state.loggedIns)
+
+//create Ids from the loggedIns state for later use
+export const selectLoggedInIds = createSelector(
+    selectLoggedIns,
+    (loggedIns) => {
+        return loggedIns.map(loggedIn => loggedIn.id)
+    }
+)

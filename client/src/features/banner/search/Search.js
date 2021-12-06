@@ -34,8 +34,7 @@ export default function SearchBox () {
                 id = "search"
                 placeholder = "Search"
                 style ={{width:"100%"}}
-                        //   onChange = {handleSearch}
-                          onClick = {handleClick}
+                onClick = {handleClick}
         ></input>
     </div>
     </>

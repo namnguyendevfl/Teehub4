@@ -48,13 +48,13 @@
 }
 
 
-/*Styling toolTip */
+/*Styling tooltip */
 .toolTip {
     position: relative;
     border-radius: 8px;
     z-index: 10
 }
-.tooltiptext, .toolTipBar {
+.toolTip-text, .toolTipBar {
     font-size: smaller;
     /* background: blue; */
     /* visibility: visible; */
@@ -78,13 +78,13 @@
     /* top:10px */
     /* border:1px solid black; */
 }
-.toolTip:hover .tooltiptext {
+.toolTip:hover .toolTip-text {
     visibility: visible;
     box-shadow: 0px 1px 3px 1px lightgrey;     
 }
 
 /*black and white tooltip */
-.toolTipBar {
+.tooltipBar {
     visibility: visible;
     /* visibility: hidden; */
     background-color: black;
@@ -96,7 +96,7 @@
     top: 19px;
     /* top:12px */
 }
-.rightHeaderToolTip{
+.right-banner-tooltip{
     width:40px;
     height:40px;
     display: flex;
