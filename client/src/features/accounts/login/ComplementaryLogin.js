@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signupNLoginEn } from "../../../languages/english/signupNLogin";
 import { popupChanged } from "../../../layout/layoutAltersSlice";
-import { rightBanner } from "../../../utils/icons/banner/rightBanner";
 import { selectLoggedInIds, selectLoggedInById, saveRecentLoggedIn, loggedInsLcalStorage } from "./loggedInsSlice";
 
 

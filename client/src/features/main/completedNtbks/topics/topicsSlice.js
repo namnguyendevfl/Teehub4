@@ -8,10 +8,10 @@ export const topcs = {
         return JSON.parse(window.localStorage.getItem('topics'))
     },
     saveTopics: (topics) => window.localStorage.setItem('topics', JSON.stringify(topics)),
-    delTopics: () => localStorage.removeItem('topics'),
+    dltTopics: () => localStorage.removeItem('topics'),
     getTopicSelected: () => JSON.parse(window.localStorage.getItem('topicSelected')),
     saveTopicSelected: (topic) => window.localStorage.setItem('topicSelected', JSON.stringify(topic)),
-    delTopicSelected: () => localStorage.removeItem('topicSelected')   
+    dltTopicSelected: () => localStorage.removeItem('topicSelected')   
 }
 
 const topicsAdapter = createEntityAdapter();
@@ -41,6 +41,10 @@ const topicsSlice = createSlice({
         },
         updateTopic (state,action) {
             topicsAdapter.updateOne(state, action.payload)
+        },
+        setTopicsEmpty(state, action) {
+            topicsAdapter.setAll(state, action.payload)
+            topcs.dltTopics()
         }
     },
     extraReducers: builder => {
@@ -64,7 +68,8 @@ const topicsSlice = createSlice({
 export const {
     saveNewTopic,
     dltTopic,
-    updateTopic
+    updateTopic,
+    setTopicsEmpty
 } = topicsSlice.actions
 
 export default topicsSlice.reducer

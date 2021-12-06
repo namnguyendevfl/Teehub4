@@ -48,6 +48,10 @@ const ntbksSlice = createSlice({
         dltNtbk(state, action) {
             ntbksAdapter.removeOne(state, action.payload)
         },
+        setNtbksEmpty(state, action) {
+            ntbksAdapter.setAll(state, action.payload)
+            ntbks.dltNtbks()
+        },
         updateNtbk(state, action) {
             ntbksAdapter.updateOne(state,action.payload)
         }
@@ -74,6 +78,7 @@ export const {
     saveNtbkSelected,
     saveNewNtbk, 
     dltNtbk,
+    setNtbksEmpty,
     updateNtbk
 } = ntbksSlice.actions
 

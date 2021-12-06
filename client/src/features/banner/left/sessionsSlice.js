@@ -14,6 +14,7 @@ export const timer = {
     dltBreak: () => localStorage.removeItem('breakInterval'),
     getSessionStatus: () => JSON.parse(window.localStorage.getItem('sessionStatus')),
     saveSessionStatus: (setBoolean) => window.localStorage.setItem('sessionStatus',JSON.stringify(setBoolean)),
+    dltSessionStatus: () => localStorage.removeItem('sessionStatus'),
 }
 
 export const sessionLocalStorage = {
@@ -53,7 +54,7 @@ const sessionsSlice = createSlice({
             timer.saveSessionParams(action.payload);
             state.sessionParams = action.payload
         },
-        focusDurationAdded(state, action) {
+        focusIntervalAdded(state, action) {
             timer.saveFocus(action.payload);
             state.focusInterval = action.payload
         },
@@ -66,6 +67,14 @@ const sessionsSlice = createSlice({
         },
         timerPopupChanged(state, action) {
             state.timerPopup = action.payload
+        },
+        setSessionEmpty(state, action) {
+            timer.dltBreak();
+            timer.dltFocus();
+            timer.dltSessionParams();
+            timer.dltSessionStatus();
+            state.sessionStatus = false
+            state.isTimerRunning = false
         }
     }
 })
@@ -74,11 +83,12 @@ export default sessionsSlice.reducer
 
 export const { 
     sessionParamsChanged,
-    focusDurationAdded,
+    focusIntervalAdded,
     breakIntervalAdded,
     sessionStatusChanged,
     isTimerRunningChanged, 
-    timerPopupChanged
+    timerPopupChanged,
+    setSessionEmpty
 } = sessionsSlice.actions
 
 

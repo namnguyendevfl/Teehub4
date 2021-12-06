@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { projectSetupEn } from "../../languages/english/projectTimerSetup";
 import { popupChanged } from "../layoutAltersSlice";
-import { breakIntervalAdded, focusDurationAdded, sessionStatusChanged, sessionParamsChanged, isTimerRunningChanged, timer } from "../../features/banner/left/sessionsSlice";
+import { breakIntervalAdded, focusIntervalAdded, sessionStatusChanged, sessionParamsChanged, isTimerRunningChanged, timer } from "../../features/banner/left/sessionsSlice";
 import { appIcons } from "../../utils/icons/generalIcons/generalIcons";
 
 const Pomodoro = ({ setFormData }) => {
@@ -158,7 +158,7 @@ export default function PomodoroTimer() {
             timeElapsed: 0,
             process:0,
         };  
-        dispatch(focusDurationAdded(focusInterval));
+        dispatch(focusIntervalAdded(focusInterval));
         dispatch(breakIntervalAdded(breakInterval));
         dispatch(sessionParamsChanged(initialSession));
         dispatch(sessionStatusChanged(true));

@@ -44,6 +44,10 @@ const chaptersSlice = createSlice({
         },
         dltChapter(state, action) {
             chaptersAdapter.removeOne(state, action.payload)
+        },
+        setChaptersEmpty(state, action) {
+            chaptersAdapter.setAll(state, action.payload)
+            chaps.dltChaps()
         }
     },
     extraReducers: builder => {
@@ -68,6 +72,7 @@ export const {
     saveChapterSelected,
     saveNewChap,
     dltChapter,
+    setChaptersEmpty
 } = chaptersSlice.actions
 
 export default chaptersSlice.reducer

@@ -5,9 +5,10 @@ import { useNavigate } from "react-router";
 import { navEn } from "../../../languages/english/nav";
 import { loggedOut, recentUrl } from "../../../features/accounts/login/loggedInsSlice";
 import { navOptionSelected } from "./navOptionsSlice";
-import { saveChapterSelected } from "../../../features/main/completedNtbks/ntbksNChapters/chaptersSlice";
-import { saveNtbkSelected } from "../../../features/main/completedNtbks/ntbksNChapters/ntbksSlice";
-
+import { saveChapterSelected, setChaptersEmpty } from "../../../features/main/completedNtbks/ntbksNChapters/chaptersSlice";
+import { saveNtbkSelected, setNtbksEmpty } from "../../../features/main/completedNtbks/ntbksNChapters/ntbksSlice";
+import { breakIntervalAdded, focusDurationAdded, focusIntervalAdded, isTimerRunningChanged, sessionParamsChanged, sessionStatusChanged, setSessionEmpty } from "../../../features/banner/left/sessionsSlice";
+import { setTopicsEmpty } from "../../../features/main/completedNtbks/topics/topicsSlice";
 export default function Nav() {  
         
     const optionValues = Object.values(navEn)
@@ -30,7 +31,16 @@ export default function Nav() {
                     break;  
                 case "logout": 
                     setUrl(() => "/")
-                    dispatch(loggedOut(recentLoggedIn.id))
+                    // dispatch(breakIntervalAdded(null))
+                    // dispatch(focusIntervalAdded(null))
+                    // dispatch(sessionParamsChanged(null))
+                    // dispatch(sessionStatusChanged(false))
+                    // dispatch(isTimerRunningChanged(false))
+                    dispatch(setSessionEmpty())
+                    dispatch(setNtbksEmpty({}));
+                    dispatch(setChaptersEmpty({}));
+                    dispatch(setTopicsEmpty({}));
+                    dispatch(loggedOut(recentLoggedIn.id));
                     break;
                 default: 
                     setUrl("/home") 

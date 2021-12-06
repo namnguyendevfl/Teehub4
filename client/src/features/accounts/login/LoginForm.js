@@ -36,8 +36,21 @@ const UserLoggedIn = ({ handleEscape, user}) => {
             </div>
         </div>
         <div>
-            <div className = "text-center mt-2">
-                {rightBanner.avaLogin()}
+            <div className = "text-center mt-2 d-flex align-items-center justify-content-center"
+            
+            >
+                {/* This is where the user ava is */}
+                {/* {rightBanner.avaLogin()} */}
+                {/* <div 
+                style = {{height: "90px", width:"90px", borderRadius: "50%"}}
+                > */}
+
+                <strong className = "d-flex align-items-center justify-content-center"
+                style = {{height: "90px", width:"90px", borderRadius: "50%", background:"#8b8c89", color:"white"}}
+                
+                > {user.first_name[0]}{user.sur_name[0]} </strong>
+
+                {/* </div> */}
             </div>
             <div className = "text-center mt-2">
                 <strong> {user.first_name} {user.sur_name} </strong>
@@ -48,7 +61,7 @@ const UserLoggedIn = ({ handleEscape, user}) => {
 }
   
 
-const LoginPassword = ({user, handleChange, handleClick}) => {
+const LoginPassword = ({user, handleChange, handleClick, password_id}) => {
     const { login_title_text, password_text, remember_pass_text, guest_mode_text, forgot_pass_text, } = signupNLoginEn
     return (
         <>
@@ -56,7 +69,7 @@ const LoginPassword = ({user, handleChange, handleClick}) => {
                 <label htmlFor = " password"> </label>
                 <input
                     className = "account-signup-N-login px-1 w-100 px-2"
-                    id = "password_login"
+                    id = {password_id}
                     name = "password"
                     type = "password"
                     placeholder = {password_text}
@@ -130,10 +143,9 @@ const LoginPassword = ({user, handleChange, handleClick}) => {
 export function LoginPopup () {
     const dispatch = useDispatch()
     //create an ids array and clickedId variable using useStateRef to set window.focus() on a clicked element and window.unfocus() on other elements
-    const ids = ['user_name_login', 'password_login']
+    const ids = ['password_login_popup']
     const [ clickedId, setClickedId, clickedIdRef] = useState()
     const { recentLoggedIn } = useSelector(state => state.loggedIns)
-    // console.log(recentLoggedIn)
     const initialLogin = {
         user_name: recentLoggedIn.user_name,
         password:"",
@@ -141,7 +153,6 @@ export function LoginPopup () {
         guest_mode: false
     }
     const [ user, setUser, userRef ] = useState(initialLogin)
-    console.log(user)
     const handleClick = (e) => {
         setClickedId(() => e.target.id)
         if (ids.includes(clickedIdRef.current)) elementFocused.focus(e.target.id)
@@ -196,7 +207,7 @@ export function LoginPopup () {
             <UserLoggedIn handleEscape = {handleEscape} user = {recentLoggedIn}/>
             <div className = "signupBox">
             <form onSubmit = {handleSubmit}> 
-                <LoginPassword user = {user} handleChange = {handleChange} handleClick = {handleClick}/>
+                <LoginPassword user = {user} handleChange = {handleChange} handleClick = {handleClick} password_id = {"password_login_popup"}/>
             </form>
             </div>
         </div>
@@ -261,11 +272,7 @@ export default function LoginForm(){
             setError(err)
         })
     }
-    const {
-        signup_title_text, login_title_text, first_name_text, sur_name_text, user_name_text, password_text,
-        birthday_text, birthday_policy_text, age_month_text, age_day_text, age_year_text, signup_text,
-        remember_pass_text, guest_mode_text, forgot_pass_text, recent_loggedIns_text, sign_all_out_text, create_account_text
-    } = signupNLoginEn
+    const { login_title_text, user_name_text } = signupNLoginEn
     return (
         <div>
             <Errors error = {error}/>
@@ -288,7 +295,8 @@ export default function LoginForm(){
                     >
                     </input>
                 </div>
-                <LoginPassword user = {user} handleChange = {handleChange} handleClick = {handleClick} />
+                <LoginPassword user = {user} handleChange = {handleChange} 
+                handleClick = {handleClick} password_id = {"password_login"}/>
             </form>
             </div>
         </div>
