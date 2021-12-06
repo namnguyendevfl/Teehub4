@@ -6,7 +6,7 @@ export const signupNLoginEn = {
     user_name_text: "Phone or email",
     password_text: "Password",
     birthday_text:"Birthday",
-    birthday_policy_text:" This will not be shown publicly unless you set to do so. Confirm your age to help make sure you get the appropriate content",
+    birthday_policy_text:" This will not be shown publicly unless you set to do so. Confirm your age to help make sure you get the appropriate content.",
     age_month_text: "Month",
     age_day_text: "Day",
     age_year_text: "Year",
