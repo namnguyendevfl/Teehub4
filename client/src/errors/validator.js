@@ -3,11 +3,9 @@ import {
   } from 'libphonenumber-js'
 
 const validator = require("validator")
-
 const countryCode = [
     { country: "US", code: "+1" },
 ]
-
 export const signupValidator = (credentials, usersTaken) => {
     const { first_name, sur_name, user_name, password, birthday, day } = credentials
     if (first_name === "" ) return "first name err"

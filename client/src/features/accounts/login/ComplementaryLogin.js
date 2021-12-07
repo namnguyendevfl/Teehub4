@@ -9,19 +9,16 @@ const LoggedInList = ({id}) => {
     const dispatch = useDispatch();
     //get user logged in from the redux slice by "id" 
     const loggedIn = useSelector(state => selectLoggedInById(state, id))
-
     const recentLoggedIn = {
         ...loggedIn,
         // stayLoggedIn: false, //change it to false b/c it was set to true when user logged in 
         foundLoggedIn:false,
     }
 
-
     const handleClick = () => {
         if (loggedIn.stayLoggedIn === false) dispatch(popupChanged("login")) //set the popupSelected to login so that it'll show the login popup
         dispatch(saveRecentLoggedIn(recentLoggedIn)) //set new values for recentLoggedIn
     }
-
     const { first_name, sur_name } = loggedIn
     return (
         <li className = "list-group-item m-0 p-0">
@@ -49,7 +46,6 @@ export default function ComplementaryLogin() {
     const handleSignup = () => {
         dispatch(popupChanged("signup"))
     }
-
     const handleRemove = () => {
         dispatch(removeAllLoggedIns())
     }

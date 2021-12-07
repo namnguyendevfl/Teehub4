@@ -6,3 +6,7 @@ export const signupErrors = {
     password_err_text: "Please enter a combination of eight letters, numbers, and special characters (like ! and @).",
     birthday_err_text: "It looks like you're info was incorrect. Please enter the real birthday or age."
 }
+
+export const loginErrors = {
+    invalid_username_text: "The phone number or email entered can not be found. Retry, or Create account",
+}

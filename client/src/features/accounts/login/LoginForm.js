@@ -9,6 +9,8 @@ import { elementFocused } from "../../../utils/styles/elementFocused";
 import { appIcons } from "../../../utils/icons/generalIcons/generalIcons";
 import { popupChanged } from "../../../layout/layoutAltersSlice";
 import { rightBanner } from "../../../utils/icons/banner/rightBanner";
+import { accounts } from "../../../utils/icons/accounts/accounts";
+import { loginErrors } from "../../../languages/english/errors";
 
 
 export const UserLoggingIn = () => {
@@ -61,11 +63,19 @@ const UserLoggedIn = ({ handleEscape, user}) => {
 }
   
 
-const LoginPassword = ({user, handleChange, handleClick, password_id, handleGuestModeClick}) => {
+const LoginPassword = ({user, handleChange, handleClick, password_id, handleGuestModeClick, error}) => {
     const { login_title_text, password_text, guest_mode_text, forgot_pass_text, } = signupNLoginEn
+    const { user_name, password, guest_mode } = user
+    const [ emptyInput, setEmptyInput ] = useState(true)
+    //dont let a user to submit when the username and password are empty
+    useEffect(() => {
+        if (user_name !== "" && password !== "") setEmptyInput(() => false)
+        else setEmptyInput(() => true)
+    },[user_name, password])
+
     return (
         <>
-            <div className = "d-flex px-3 pt-3">
+            <div className = "d-flex px-3">
                 <label htmlFor = " password"> </label>
                 <input
                     className = "account-signup-N-login px-1 w-100 px-2"
@@ -73,11 +83,10 @@ const LoginPassword = ({user, handleChange, handleClick, password_id, handleGues
                     name = "password"
                     type = "password"
                     placeholder = {password_text}
-                    value = {user.password}
+                    value = {password}
                     onChange = {handleChange}
                     onClick = {handleClick}
                     onKeyUp = {handleClick}
-                    // required = "true"
                 >
                 </input>
             </div>
@@ -95,25 +104,33 @@ const LoginPassword = ({user, handleChange, handleClick, password_id, handleGues
                     name = "guest_mode"
                     onChange={handleChange}
                     onKeyUp = {handleClick}
-                    checked={user.guest_mode}
+                    checked={guest_mode}
                    
                 ></input>
                 <label className = "px-2" htmlFor = "guestMode">{guest_mode_text}</label>
             </div>
-            <div className = "my-3"></div>
-            <div className = "my-2" style = {{height:"20px"}}> </div>
-            <div className ="d-flex justify-content-center"  >    
+            { error === null && <div style = {{height:"31px"}}> </div>}
+            <div className ="d-flex justify-content-center my-2"  >    
                 <a href = "" tabIndex = "-1">
                     <span className ="text-center"  > {forgot_pass_text}</span>
                 </a>
             </div>            
-            <div className = "m-3 mt-1 d-flex justify-content-center">
+            <div className = "position-relative m-3 mt-1 d-flex justify-content-center">
+                
                 <button 
                 tabIndex = "-1"
                 className = "submit-btn list-group-item w-100 p-2"
-                type = "submit">
+                type = "submit"
+                >
                     <span className = "submit-btn-font"> {login_title_text}</span>
                 </button>
+                {emptyInput && 
+                 <div 
+                 tabIndex = "-1"
+                 className = "disable-login-submit list-group-item w-100 p-2 d-flex align-items-center justify-content-center"
+                 >
+                 </div>
+                }
             </div>
         </>
     )
@@ -127,6 +144,8 @@ const handleEscape = (e, dispatch) => dispatch(popupChanged(false))
 const handleSubmit = (e, user, dispatch, setError) => {
     e.preventDefault();
     const { user_name, password, guest_mode } = user
+
+
     const userLoggingIn = {
         user_name: user_name.trim(),
         password: password.trim()
@@ -158,15 +177,6 @@ const handleSubmit = (e, user, dispatch, setError) => {
     })
 }
 
-// const handleChange = (e,setUser) => {
-//     let { target: {name, value, type, checked} } = e
-//     value = type === "checkbox" ? checked : value
-//     ///dnt work as setUser has to stay in a React Component
-//     setUser((prevUser) => ({
-//         ...prevUser,
-//         [name]: value
-//     }))
-// }
 export function LoginPopup () {
     const dispatch = useDispatch()
     //create an ids array and clickedId variable using useStateRef to set window.focus() on a clicked element and window.unfocus() on other elements
@@ -193,7 +203,6 @@ export function LoginPopup () {
             ...prevUser,
             guest_mode: false
         }))
-        console.log("clicked")
     }
     const handleChange = ({target: {name, value, type, checked}}) => {
         value = type === "checkbox" ? checked : value
@@ -219,6 +228,17 @@ export function LoginPopup () {
     )
 }
 
+const Error = ({error = { message : ""}}) => {
+    const { exclamationCircleIcon } = accounts
+    const { invalid_username_text } = loginErrors
+    return ( error &&
+        <div className = "ms-3 d-flex" > 
+            <div className = " me-2 my-1"
+            > {exclamationCircleIcon()} </div>
+            <span className = "username-login-error me-3 my-1"> {invalid_username_text} </span>
+        </div>  
+    )
+}
 export default function LoginForm(){
     const dispatch = useDispatch()
     //create an ids array and clickedId variable using useStateRef to set window.focus() on a clicked element and window.unfocus() on other elements
@@ -230,9 +250,7 @@ export default function LoginForm(){
         remember_pass: false,
         guest_mode: false
     }
-
     const [ user, setUser, userRef ] = useState(initialLogin)
-    // console.log(user)
     const handleClick = (e) => {
         setClickedId(() => e.target.id)
         if (ids.includes(clickedIdRef.current)) elementFocused.focus(e.target.id)
@@ -248,11 +266,10 @@ export default function LoginForm(){
             [name]: value
         }))
     }
-
+    // console.log(error)
     const { login_title_text, user_name_text } = signupNLoginEn
     return (
         <div>
-            <Errors error = {error}/>
             <div className ="row mx-0 d-flex align-items-center justify-content-between">
                 <h4  className ="col text-center"> {login_title_text}</h4>
             </div>
@@ -272,10 +289,16 @@ export default function LoginForm(){
                     >
                     </input>
                 </div>
+                {error && error.message === "invalid username"
+                ? <Error error = {error}/>
+                : <div className = "mb-3"> </div>
+                }
+
                 <LoginPassword user = {user} 
-                // handleChange = {e => handleChange(e, setUser())} 
                 handleChange = {handleChange} 
-                handleClick = {handleClick} password_id = {"password_login"}/>
+                handleClick = {handleClick} password_id = {"password_login"}
+                error = {error}
+                />
             </form>
             </div>
         </div>

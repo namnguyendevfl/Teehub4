@@ -108,6 +108,8 @@ overflow-x: scroll;
   padding-right: 8px;
 }
 
+
+/* Login */
 /* popup */
 .popup-offset-background {
   height: 100vh;   
@@ -121,11 +123,18 @@ overflow-x: scroll;
   z-index: 5;
 }
 
-.submit-btn {
+.submit-btn, .disable-login-submit {
   background: #0d6efd;
   color:white !important;  
   border-radius: 8px !important;
   z-index: 12; 
+}
+
+.disable-login-submit {
+  position: absolute;
+  color: black;
+  opacity: 0.1;
+  height: 40px;
 }
 .submit-btn:hover {
   opacity: 0.9;
@@ -143,6 +152,11 @@ overflow-x: scroll;
   border: none;
 }
 
+
+.username-login-error {
+  color: red;
+  font-size: 0.90rem;
+}
 /* Account popup inputs */
 
 .account-signup-N-login {

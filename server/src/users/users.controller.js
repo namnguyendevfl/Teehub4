@@ -60,11 +60,12 @@ const readUserLoggingIn = async (req, res, next) => {
             return res.json({data:newUser})
         } else return next({
             status:404,
-            message: `wrong password`   
+            message: `invalid password`   
         })
     } else return next({
         status:404,
-        message: `userId is not found: ${req.params.userName}`
+        // message: `userName is not found: ${req.params.userName}`
+        message: `notfound username`
     }) 
 }
 
