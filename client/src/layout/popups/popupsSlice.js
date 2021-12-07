@@ -21,15 +21,11 @@ export const sessionLocalStorage = {
     sessionParams: timer.getSessionParams(),
 }
 
-
-
 const initialSession = {
     ntbkCRUD: false,
 }
 
-
 const initialState = sessionLocalStorage ? {...sessionLocalStorage, isTimerRunning:false} : initialSession
-
 const sessionsSlice = createSlice({
     name: "sessions",
     initialState,

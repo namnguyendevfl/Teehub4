@@ -48,13 +48,14 @@ const readUserLoggingIn = async (req, res, next) => {
     const users = await service.list();
     const foundUser = users.find((user, idx) => user.user_name == user_name);
     if (foundUser) {
+        const { id, user_name, first_name, sur_name } = foundUser
         const matchedPw = await argon2.verify(foundUser.password, password)
         if (matchedPw) {
             const newUser = {
-                id : foundUser.id,
-                user_name: foundUser.user_name,
-                first_name: foundUser.first_name,
-                sur_name: foundUser.sur_name
+                id : id,
+                user_name: user_name,
+                first_name: first_name,
+                sur_name: sur_name
             }
             return res.json({data:newUser})
         } else return next({
@@ -72,9 +73,12 @@ const create = async (req, res, next) => {
     const rawNewUser = req.body.data;
     rawNewUser.password = res.locals.pwHashed;
     const hashedNewUser = await service.create(rawNewUser)
+    const { id, user_name, first_name, sur_name } = hashedNewUser
     const userReturned = {
-        id : hashedNewUser.id,
-        user_name: hashedNewUser.user_name, 
+        id : id,
+        user_name: user_name,
+        first_name: first_name,
+        sur_name: sur_name
     }
     return res.status(201).json({data: userReturned})
 }

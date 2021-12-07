@@ -22,6 +22,7 @@ const LoggedInList = ({id}) => {
         dispatch(saveRecentLoggedIn(recentLoggedIn)) //set new values for recentLoggedIn
     }
 
+    const { first_name, sur_name } = loggedIn
     return (
         <li className = "list-group-item m-0 p-0">
         <button className = "list-group-item w-100 d-flex align-items-center"
@@ -30,9 +31,9 @@ const LoggedInList = ({id}) => {
             {/* {rightBanner.ava()} */}
             <div className = "d-flex align-items-center justify-content-center"
             style = {{ width : "40px", height:"40px", borderRadius:"50%", background:"#8b8c89", color:"white"}}> 
-            <strong>  {loggedIn.first_name[0]}{loggedIn.sur_name[0]} </strong> </div>
+            <strong>  {first_name[0].toUpperCase()}{sur_name[0].toUpperCase()} </strong> </div>
             <div className = "d-flex align-items-center">
-            <h6 className = "px-3" style ={{marginTop: "8px"}}> {loggedIn.first_name} {loggedIn.sur_name} </h6>
+            <h6 className = "px-3" style ={{marginTop: "8px"}}> {first_name} {sur_name} </h6>
             </div>
         </button>
     </li>

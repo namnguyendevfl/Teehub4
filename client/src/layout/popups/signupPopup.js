@@ -14,9 +14,8 @@ import { signupErrors } from "../../languages/english/errors";
 import { selectUserNames } from "../../features/accounts/usersSlice";
 
 
-const Birthday = ({user, handleChange, handleClick, handleBirthday}) => {
-    const { age_month_text, age_day_text, age_year_text, use_age_text
-    } = signupNLoginEn
+const Birthday = ({user, handleChange, handleClick}) => {
+    const { age_month_text, age_day_text, age_year_text } = signupNLoginEn
     const { downChevron } = accounts
     const now = new Date();
     const currentYear = now.getFullYear()
@@ -79,7 +78,7 @@ const Birthday = ({user, handleChange, handleClick, handleBirthday}) => {
                 {downChevron()}
             </div>
         </div>
-        <div className = "pe-1 position-relative"> 
+        <div className = "position-relative"> 
             <select
                 className = "account-signup-N-login birthday-select text-start ps-2"
                 id = "year"
@@ -125,14 +124,14 @@ export default function UserSignup(){
         age_day: null,
         age_month: null,
         age_year: null, 
-        age:null,
+        age: null,
     }
     const ids = ['first_name', 'sur_name', 'user_name_popup', 'password_popup', 'age_popup', 'month' ,'day', 'year' ]
     const dispatch = useDispatch();
     //use the react-useStateRef to update the most recent values of any state variables 
     const [ error, setError] = useState(null);
     const [ errorIdList, setErrorIdList, errorIdListRef ] = useState(null)
-    const [clickedId, setClickId, clickedIdRef] = useState("")
+    const [ clickedId, setClickId, clickedIdRef] = useState("")
     const handleClick = (e) => {
         setClickId(() => e.target.id)
         if (ids.includes(clickedIdRef.current)) {
@@ -187,12 +186,14 @@ export default function UserSignup(){
     const usersTaken = useSelector(selectUserNames)
     const handleSubmit = (event) => {
         event.preventDefault();
+        const { first_name, sur_name, user_name, password, birthday, age} = user
         const newUser = {
-            first_name: user.first_name,
-            sur_name: user.sur_name,
-            user_name : user.user_name,
-            password : user.password,
-            birthday : user.birthday,
+            first_name: first_name.trim(),
+            sur_name: sur_name.trim(),
+            user_name : user_name.trim(),
+            password : password,
+            birthday : birthday,
+            age: age
         }
         setErrorIdList(() => errorIds(newUser, usersTaken))
         errorIdListRef.current.forEach((id) => elementFocused.error(id))
@@ -206,11 +207,10 @@ export default function UserSignup(){
                 setUser(() => initialUser);
                 const newUser = {
                     ...result,
-                    stayLoggedIn: true
+                    stayLoggedIn: true,
                 }
                 dispatch(popupChanged(false))
                 dispatch(saveLoggedIn(newUser))
-                dispatch(saveRecentLoggedIn(newUser))
             })
             .catch(setError) 
         }
@@ -232,7 +232,6 @@ export default function UserSignup(){
             default: return null
         }
     }
-    console.log(error)
     return (
         <>
         <div className ="">

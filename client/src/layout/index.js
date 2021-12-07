@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedInsLcalStorage, recentLoggedInLcalStorage } from "../features/accounts/login/loggedInsSlice";
-import { fetchUsers, selectUserNames, selectUsers } from "../features/accounts/usersSlice";
+import { fetchUsers } from "../features/accounts/usersSlice";
 import LoggedIn from "./loggedIn";
 import LoggingIn from "./loggingIn/LoggingIn";
 import Popups from "./popups";
@@ -17,8 +17,10 @@ export default function Layout() {
         }
         return false
     })()
+ 
     const [ loggedIn, setLoggedIn ] = useState(status)
     useEffect(() => {
+        // loggedInsLcalStorage.dltLoggedIns()
         setLoggedIn(() => status)
         dispatch(fetchUsers())
     },[recentLoggedIn])

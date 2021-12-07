@@ -1,7 +1,5 @@
 import {
     isPossiblePhoneNumber,
-    isValidPhoneNumber,
-    validatePhoneNumberLength
   } from 'libphonenumber-js'
 
 const validator = require("validator")
@@ -11,7 +9,7 @@ const countryCode = [
 ]
 
 export const signupValidator = (credentials, usersTaken) => {
-    const { first_name, sur_name, user_name, password, birthday } = credentials
+    const { first_name, sur_name, user_name, password, birthday, day } = credentials
     if (first_name === "" ) return "first name err"
     if (sur_name === "") return  "last name err" 
     if (validator.isEmail(user_name)) {
@@ -30,7 +28,7 @@ export const signupValidator = (credentials, usersTaken) => {
         return  "username err" 
     }
     if (password === "" || password.length < 8 ) return "password err" 
-    if (birthday === undefined ) return "birthday err" 
+    if (birthday === undefined && day === null ) return "birthday err" 
 
 }
 

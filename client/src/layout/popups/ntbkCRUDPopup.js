@@ -8,7 +8,6 @@ import More from "../../features/complementary/completedNtbks/SCULDM/more";
 export default function NtbkCRUD() {
     //SCULDM: search, create, update & list, delete and more
     const { ntbks_chaps_topics : { SCULDM } } = useSelector(state => state.complementaries)
-
    
     const displayOption = (option) => {
         switch (option) {
