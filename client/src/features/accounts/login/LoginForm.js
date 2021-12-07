@@ -61,8 +61,8 @@ const UserLoggedIn = ({ handleEscape, user}) => {
 }
   
 
-const LoginPassword = ({user, handleChange, handleClick, password_id}) => {
-    const { login_title_text, password_text, remember_pass_text, guest_mode_text, forgot_pass_text, } = signupNLoginEn
+const LoginPassword = ({user, handleChange, handleClick, password_id, handleGuestModeClick}) => {
+    const { login_title_text, password_text, guest_mode_text, forgot_pass_text, } = signupNLoginEn
     return (
         <>
             <div className = "d-flex px-3 pt-3">
@@ -83,23 +83,6 @@ const LoginPassword = ({user, handleChange, handleClick, password_id}) => {
             </div>
             <div className = "pb-1"> 
             </div>
-            {/* <div className="text-start px-2 d-flex justify-content-start align-items-center"
-                style = {{height: "25px"}}
-            >
-                <input
-                    style = {{
-                        width:"32px"
-                    }}
-                    type = "checkbox"
-                    id = "remember_pass"
-                    name = "remember_pass"
-                    onChange={handleChange}
-                    onKeyUp = {handleClick}
-                    checked={user.remember_pass}
-                    value="rememberPass"                
-                ></input>
-                <label className = "px-2" htmlFor = "rememberPass">{remember_pass_text}</label>
-            </div> */}
             <div className="text-start p-2 my-1 d-flex justify-content-start align-items-center"
                 style = {{height: "20px"}}
             >
@@ -113,8 +96,7 @@ const LoginPassword = ({user, handleChange, handleClick, password_id}) => {
                     onChange={handleChange}
                     onKeyUp = {handleClick}
                     checked={user.guest_mode}
-                    value="guestMode"
-            
+                   
                 ></input>
                 <label className = "px-2" htmlFor = "guestMode">{guest_mode_text}</label>
             </div>
@@ -140,6 +122,51 @@ const LoginPassword = ({user, handleChange, handleClick, password_id}) => {
 //We need 2 login components, one for popup with known user_name and the other for general login. 
 //Created a password component so that it can be used in these two components
 
+
+const handleEscape = (e, dispatch) => dispatch(popupChanged(false))
+const handleSubmit = (e, user, dispatch, setError) => {
+    e.preventDefault();
+    const { user_name, password, guest_mode } = user
+    const userLoggingIn = {
+        user_name: user_name.trim(),
+        password: password.trim()
+    }
+    //Post the logging in user credential to the server to see what if the password inputted is correct
+    //If user credentials are correct, then request the server to send back "id" of the logging in user
+    //Then create a loggedIn obj with 2 keys including "id" and loggedin status
+    //Use redux "useDispatch" to save this new obj to the redux store and localstorage to persist the state of loggedin status
+
+    postUserLoggingIn(userLoggingIn)
+    .then()
+    .then(() => 
+        readUserLoggingIn(userLoggingIn)
+        .then((result) => {
+            const loggedIn = (() => {
+                if (guest_mode) return {...result, stayLoggedIn:false, foundLoggedIn: true}
+                return  {
+                ...result,
+                stayLoggedIn: true,
+                foundLoggedIn: true
+            }})()
+
+            console.log(loggedIn)
+            dispatch(saveLoggedIn(loggedIn))
+            dispatch(popupChanged(false))
+        }))
+    .catch((err) => {
+        setError(err)
+    })
+}
+
+// const handleChange = (e,setUser) => {
+//     let { target: {name, value, type, checked} } = e
+//     value = type === "checkbox" ? checked : value
+//     ///dnt work as setUser has to stay in a React Component
+//     setUser((prevUser) => ({
+//         ...prevUser,
+//         [name]: value
+//     }))
+// }
 export function LoginPopup () {
     const dispatch = useDispatch()
     //create an ids array and clickedId variable using useStateRef to set window.focus() on a clicked element and window.unfocus() on other elements
@@ -161,6 +188,13 @@ export function LoginPopup () {
         ids.forEach((id, idx) => (id !== clickedId) && elementFocused.unFocus(id))
     }, [clickedId])
     const [error, setError] = useState(null);
+    const handleGuestModeClick = () => {
+        setUser((prevUser) => ({
+            ...prevUser,
+            guest_mode: false
+        }))
+        console.log("clicked")
+    }
     const handleChange = ({target: {name, value, type, checked}}) => {
         value = type === "checkbox" ? checked : value
         setUser((prevUser) => ({
@@ -168,46 +202,17 @@ export function LoginPopup () {
             [name]: value
         }))
     }
-    const handleEscape = (e) => {;
-        dispatch(popupChanged(false))
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const userLoggingIn = {
-            user_name: user.user_name.trim(),
-            password: user.password.trim()
-        }
-        //Post the logging in user credential to the server to see what if the password inputted is correct
-        //If user credentials are correct, then request the server to send back "id" of the logging in user
-        //Then create a loggedIn obj with 2 keys including "id" and loggedin status
-        //Use redux "useDispatch" to save this new obj to the redux store and localstorage to persist the state of loggedin status
-
-        postUserLoggingIn(userLoggingIn)
-        .then()
-        .then(() => 
-            readUserLoggingIn(userLoggingIn)
-            .then((result) => {
-                const loggedIn = {
-                    ...result,
-                    stayLoggedIn: true
-                }
-                dispatch(saveLoggedIn(loggedIn))
-                dispatch(saveRecentLoggedIn(loggedIn))
-                dispatch(popupChanged(false))
-            }))
-        .catch((err) => {
-            setError(err)
-        })
-    }
     return (
         <div className =""
         >
             <Errors error = {error}/>
-            <UserLoggedIn handleEscape = {handleEscape} user = {recentLoggedIn}/>
+            <UserLoggedIn handleEscape = {e => handleEscape(e,dispatch)} user = {recentLoggedIn}/>
             <div className = "signupBox">
-            <form onSubmit = {handleSubmit}> 
-                <LoginPassword user = {user} handleChange = {handleChange} handleClick = {handleClick} password_id = {"password_login_popup"}/>
+            <form onSubmit = {e => handleSubmit(e, user, dispatch, setError)}> 
+                <LoginPassword user = {user} handleGuestModeClick = {handleGuestModeClick} 
+                handleChange = {handleChange} 
+                // handleChange = {e => handleChange(e, setUser())} //dnt work as setUser has to stay in a React Component
+                handleClick = {handleClick} password_id = {"password_login_popup"}/>
             </form>
             </div>
         </div>
@@ -227,7 +232,7 @@ export default function LoginForm(){
     }
 
     const [ user, setUser, userRef ] = useState(initialLogin)
-    console.log(user)
+    // console.log(user)
     const handleClick = (e) => {
         setClickedId(() => e.target.id)
         if (ids.includes(clickedIdRef.current)) elementFocused.focus(e.target.id)
@@ -244,34 +249,6 @@ export default function LoginForm(){
         }))
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const userLoggingIn = {
-            user_name: user.user_name.trim(),
-            password: user.password.trim()
-        }
-        //Post the logging in user credential to the server to see what if the password inputted is correct
-        //If user credentials are correct, then request the server to send back "id" of the logging in user
-        //Then create a loggedIn obj with 2 keys including "id" and loggedin status
-        //Use redux "useDispatch" to save this new obj to the redux store and localstorage to persist the state of loggedin status
-
-        // loggedInsLcalStorage.dltLoggedIns()
-        postUserLoggingIn(userLoggingIn)
-        .then()
-        .then(() => 
-            readUserLoggingIn(userLoggingIn)
-            .then((result) => {
-                const loggedIn = {
-                    ...result,
-                    stayLoggedIn: true
-                }
-                dispatch(saveLoggedIn(loggedIn))
-                dispatch(saveRecentLoggedIn(loggedIn))
-            }))
-        .catch((err) => {
-            setError(err)
-        })
-    }
     const { login_title_text, user_name_text } = signupNLoginEn
     return (
         <div>
@@ -280,7 +257,7 @@ export default function LoginForm(){
                 <h4  className ="col text-center"> {login_title_text}</h4>
             </div>
             <div className = "signupBox">
-            <form onSubmit = {handleSubmit}> 
+            <form onSubmit = {e => handleSubmit(e, user, dispatch, setError)}> 
                 <div className = "d-flex px-3 pt-3">
                     <input
                         className = "account-signup-N-login px-2 w-100"
@@ -295,7 +272,9 @@ export default function LoginForm(){
                     >
                     </input>
                 </div>
-                <LoginPassword user = {user} handleChange = {handleChange} 
+                <LoginPassword user = {user} 
+                // handleChange = {e => handleChange(e, setUser())} 
+                handleChange = {handleChange} 
                 handleClick = {handleClick} password_id = {"password_login"}/>
             </form>
             </div>

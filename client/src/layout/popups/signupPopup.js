@@ -11,7 +11,7 @@ import { signupNLoginEn } from "../../languages/english/signupNLogin";
 import { elementFocused } from "../../utils/styles/elementFocused";
 import { errorIds, signupValidator } from "../../errors/validator";
 import { signupErrors } from "../../languages/english/errors";
-import { selectUserNames } from "../../features/accounts/signup/usersSlice";
+import { selectUserNames } from "../../features/accounts/usersSlice";
 
 
 const Birthday = ({user, handleChange, handleClick, handleBirthday}) => {

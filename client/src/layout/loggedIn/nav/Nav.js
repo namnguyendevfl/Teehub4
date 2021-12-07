@@ -3,11 +3,11 @@ import useState from "react-usestateref"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { navEn } from "../../../languages/english/nav";
-import { loggedOut, recentUrl } from "../../../features/accounts/login/loggedInsSlice";
+import { logOut, recentUrl, saveLoggedIn} from "../../../features/accounts/login/loggedInsSlice";
 import { navOptionSelected } from "./navOptionsSlice";
 import { saveChapterSelected, setChaptersEmpty } from "../../../features/main/completedNtbks/ntbksNChapters/chaptersSlice";
 import { saveNtbkSelected, setNtbksEmpty } from "../../../features/main/completedNtbks/ntbksNChapters/ntbksSlice";
-import { breakIntervalAdded, focusDurationAdded, focusIntervalAdded, isTimerRunningChanged, sessionParamsChanged, sessionStatusChanged, setSessionEmpty } from "../../../features/banner/left/sessionsSlice";
+import { setSessionEmpty } from "../../../features/banner/left/sessionsSlice";
 import { setTopicsEmpty } from "../../../features/main/completedNtbks/topics/topicsSlice";
 export default function Nav() {  
         
@@ -17,6 +17,11 @@ export default function Nav() {
     const navigate = useNavigate();
     const [ url, setUrl, urlRef ] = useState()
     const dispatch = useDispatch()
+    const loggedOut = {
+        ...recentLoggedIn,
+        stayLoggedIn: false,
+        foundLoggedIn: false
+    }
     const menuList = optionValues.map((option, idx) => {
         const handleClick = (e) => {
             switch (optionKeys[idx]) {
@@ -31,16 +36,12 @@ export default function Nav() {
                     break;  
                 case "logout": 
                     setUrl(() => "/")
-                    // dispatch(breakIntervalAdded(null))
-                    // dispatch(focusIntervalAdded(null))
-                    // dispatch(sessionParamsChanged(null))
-                    // dispatch(sessionStatusChanged(false))
-                    // dispatch(isTimerRunningChanged(false))
                     dispatch(setSessionEmpty())
                     dispatch(setNtbksEmpty({}));
                     dispatch(setChaptersEmpty({}));
                     dispatch(setTopicsEmpty({}));
-                    dispatch(loggedOut(recentLoggedIn.id));
+                    dispatch(saveLoggedIn(loggedOut))
+                    dispatch(logOut({id: recentLoggedIn.id, changes: loggedOut}))
                     break;
                 default: 
                     setUrl("/home") 

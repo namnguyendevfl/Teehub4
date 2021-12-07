@@ -8,7 +8,6 @@ import ComplementaryLogin from "./ComplementaryLogin";
 export default function Login(props) {
 
     const { bgPosition, elementPosition,offsetElementPosition} = Centralize(530,49,700 ,50)
-    // return ( (!displayLoginPopup && !displayCreateAcc) &&
     return (
         <div className = "login-bg w-100" style = {bgPosition} >
             <div className = "login-box" style = {elementPosition}>

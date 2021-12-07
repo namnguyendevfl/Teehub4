@@ -1,11 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import LoginForm, { LoginPopup } from "../../features/accounts/login/LoginForm";
+import { LoginPopup } from "../../features/accounts/login/LoginForm";
 import { Centralize } from "../../utils/styles/centralize";
 import NtbkCRUD from "./ntbkCRUDPopup";
 import PomodoroTimer from "./PomodoroTimer";
 import UserSignup from "./signupPopup";
-
 
 export default function Popups() {
     // get the popupSelected state from Redux store
@@ -16,7 +15,6 @@ export default function Popups() {
         if (popupSelected === "login") return { height: 400, top: 50, width:380, left: 50 }
         return { height: 400, top: 50, width:500, left: 50 }
     }
-
     const { height, top, width, left } = position()
     //Call the Centralize component in the utils/style and pass in appropriate arguments to get background and element set up for the popup 
     const { bgPosition, elementPosition, offsetElementPosition } = Centralize(height, top, width, left)
@@ -27,10 +25,8 @@ export default function Popups() {
         width: `${position().width}px`,
         height: `${position().height}px`,
         zIndex: "4",
-        // border: "1px solid",
         background: "white",
         borderRadius: "8px",
-        // boxShadow: "0px 0px 5px 0.7px #6c757d" 
         boxShadow: "0px 0px 10px 2px" 
 
     }
@@ -45,7 +41,7 @@ export default function Popups() {
     return ( 
     <>
         <>
-        <div className = "popup-offsetBackground w-100"></div>
+        <div className = "popup-offset-background w-100"></div>
         <div className = "popup-background" style = {bgPosition} >
             <div style = {elementStyle}>
                 {popupRendered()}

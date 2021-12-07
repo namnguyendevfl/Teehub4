@@ -5,13 +5,13 @@ import { initState } from "../../../redux/getInitStates";
 //Create a variable to hold values in the localStorage 
 export const loggedInsLcalStorage = {
     getLoggedIns: () => JSON.parse(window.localStorage.getItem('loggedIns')),
-    saveLoggedIns: (loginState) => window.localStorage.setItem('loggedIns', JSON.stringify(loginState)),
+    saveLoggedIns: (loggedIns) => window.localStorage.setItem('loggedIns', JSON.stringify(loggedIns)),
     dltLoggedIns: () => localStorage.removeItem('loggedIns'),
 }
 
 export const recentLoggedInLcalStorage = {
     getLoggedIn: () => JSON.parse(window.localStorage.getItem('loggedIn')),
-    saveLoggedIn: (loginState) => window.localStorage.setItem('loggedIn', JSON.stringify(loginState)),
+    saveLoggedIn: (recentLoggedIn) => window.localStorage.setItem('loggedIn', JSON.stringify(recentLoggedIn)),
     dltLoggedIn: () => localStorage.removeItem('loggedIn'),
 }
 
@@ -22,34 +22,57 @@ export const recentUrl = {
 }
 
 const loggedIns = loggedInsLcalStorage.getLoggedIns() ? loggedInsLcalStorage.getLoggedIns() : []
+// const loggedIns = []
+const recentLoggedIn = (() => {
+    if (recentLoggedInLcalStorage) {
+        const { getLoggedIn } = recentLoggedInLcalStorage
+        return {
+            ...getLoggedIn(),
+            foundLoggedIn : false
+        }
+    }
+    return null
+})()
 //used Redux toolkit to set up a normalized state structure for loggedIns
 const loggedInsAdapter = createEntityAdapter()
 const initialState = loggedInsAdapter.getInitialState({
     ...initState(loggedIns),
-    recentLoggedIn: recentLoggedInLcalStorage.getLoggedIn()
+    recentLoggedIn: recentLoggedIn
 })
 
 const loggedInsSlice = createSlice({
     name: "loggedIns",
     initialState,
     reducers: {
-        loggedOut: (state, action) => {
-            const loggedOut = {
-                id: action.payload,
-                stayLoggedIn: false
-            }
+        logOut: (state, action) => {
             //save logeegOut status in the localstorage to persist its state 
-            recentLoggedInLcalStorage.saveLoggedIn(loggedOut)
-            state.recentLoggedIn = loggedOut
+            loggedInsAdapter.updateOne(state,action.payload)
+            recentLoggedInLcalStorage.saveLoggedIn(null)
+            state.recentLoggedIn = null
         },
+
+        updateLoggedIn(state, action) {
+            loggedInsAdapter.updateOne(state,action.payload)
+        },
+
         saveLoggedIn: (state, action) => {
-            recentLoggedInLcalStorage.saveLoggedIn(action.payload)
             //add new loggedIn to the localStorage 
-            if (!state.ids.includes(action.payload.id)) {
-                loggedIns.push(action.payload)
+            if (action.payload) {
+                recentLoggedInLcalStorage.saveLoggedIn(action.payload)
+                const { id } = action.payload
+                const payloadIdx = state.ids.indexOf(id)
+                if (payloadIdx === -1) loggedIns.push(action.payload)
+                else loggedIns.splice(payloadIdx, 1, action.payload)
                 loggedInsLcalStorage.saveLoggedIns(loggedIns)
+                state.recentLoggedIn = action.payload
+                loggedInsAdapter.addOne(state, action.payload)   
             }
-            loggedInsAdapter.addOne(state, action.payload)            
+        },
+        removeAllLoggedIns: (state, action) => {
+            recentLoggedInLcalStorage.saveLoggedIn(null)
+            loggedInsLcalStorage.saveLoggedIns(null)
+            state.recentLoggedIn = null
+            loggedInsAdapter.removeAll(state)  
         },
         saveRecentLoggedIn: (state, action) => {
             state.recentLoggedIn = action.payload
@@ -61,7 +84,9 @@ const loggedInsSlice = createSlice({
 export const { 
     saveLoggedIn, 
     saveRecentLoggedIn,
-    loggedOut
+    logOut,
+    updateLoggedIn,
+    removeAllLoggedIns
 } = loggedInsSlice.actions
 export default loggedInsSlice.reducer
 

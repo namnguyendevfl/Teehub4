@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signupNLoginEn } from "../../../languages/english/signupNLogin";
 import { popupChanged } from "../../../layout/layoutAltersSlice";
-import { selectLoggedInIds, selectLoggedInById, saveRecentLoggedIn, loggedInsLcalStorage } from "./loggedInsSlice";
+import { selectLoggedInIds, selectLoggedInById, saveRecentLoggedIn, removeAllLoggedIns } from "./loggedInsSlice";
 
 
 const LoggedInList = ({id}) => {
@@ -12,11 +12,13 @@ const LoggedInList = ({id}) => {
 
     const recentLoggedIn = {
         ...loggedIn,
-        stayLoggedIn: false //change it to false b/c it was set to true when user logged in 
+        // stayLoggedIn: false, //change it to false b/c it was set to true when user logged in 
+        foundLoggedIn:false,
     }
 
+
     const handleClick = () => {
-        dispatch(popupChanged("login")) //set the popupSelected to login so that it'll show the login popup
+        if (loggedIn.stayLoggedIn === false) dispatch(popupChanged("login")) //set the popupSelected to login so that it'll show the login popup
         dispatch(saveRecentLoggedIn(recentLoggedIn)) //set new values for recentLoggedIn
     }
 
@@ -46,7 +48,11 @@ export default function ComplementaryLogin() {
     const handleSignup = () => {
         dispatch(popupChanged("signup"))
     }
-    const { recent_loggedIns_text, sign_all_out_text, create_account_text } = signupNLoginEn
+
+    const handleRemove = () => {
+        dispatch(removeAllLoggedIns())
+    }
+    const { recent_loggedIns_text, remove_all_text, create_account_text } = signupNLoginEn
     return (
         <>
         <div className ="ms-3 me-2">
@@ -59,8 +65,8 @@ export default function ComplementaryLogin() {
             <div className = "row complementary-login-segment-btns d-flex w-100" >
             <hr className = " d-flex mx-2 justify-content-center mt-3 mb-1" style = {{ margin:"auto", width: "-webkit-fill-available" }} />
             <div className = "col-6 ">
-                <button className = "complementary-btns w-100 p-2" >
-                    <span className = "submit-btn-font"> {sign_all_out_text}</span>
+                <button className = "complementary-btns w-100 p-2" onClick = {handleRemove}>
+                    <span className = "submit-btn-font"> {remove_all_text}</span>
                 </button>
             </div>
             <div className = "col-6 ">

@@ -9,7 +9,7 @@ import layoutAltersReducer from "../layout/layoutAltersSlice";
 import draftedNtbksReducer from "../features/main/completedNtbks/draftedNtbksSlice";
 import draftedTopicsReducer from "../features/main/completedNtbks/draftedTopicsSlice";
 import sessionsReducer from "../features/banner/left/sessionsSlice";
-import usersReducer from "../features/accounts/signup/usersSlice";
+import usersReducer from "../features/accounts/usersSlice";
 
 const store = configureStore({
     reducer: {

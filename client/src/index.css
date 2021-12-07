@@ -72,8 +72,44 @@ overflow-x: scroll;
   box-shadow: none;
 }
 
+/*loggedIn Layout */
+
+.loggedIn-layout{
+  height: 100vh;
+  background: #e9ecef;
+}
+
+.banner {
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  background: white;
+  z-index: 3;
+}
+
+.navigation {
+  top: 80px;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  z-index: 1; 
+}
+.main-bg {
+  top: 77px;
+  bottom: 0;
+  position:absolute
+}
+.complementary {
+  top: 90px;
+  right: 0px;
+  bottom: 0;
+  position: fixed;
+  padding-right: 8px;
+}
+
 /* popup */
-.popup-offsetBackground {
+.popup-offset-background {
   height: 100vh;   
   position: fixed;
   top: 0px;
@@ -135,13 +171,7 @@ overflow-x: scroll;
 }
 
 /* banner */
-.banner {
-  height: 60px;
-  width: 100%;
-  position: fixed;
-  background: white;
-  z-index: 2;
-}
+
 
 
 /*Notebook more */
@@ -153,14 +183,7 @@ overflow-x: scroll;
   /* z-index: 1; */
 }
 /* using navigation instead of nav to not to mess up with bootstrap nav  */
-.navigation {
-  top: 80px;
-  bottom:0;
-  position:fixed;
-  overflow-y:scroll;
-  overflow-x:hidden;
-  z-index: 1;
-}
+
 .navigation::-webkit-scrollbar {
   width: 8px;   
 } 
@@ -178,12 +201,7 @@ overflow-x: scroll;
   transition-delay: 1s;   
 }  
 
-.main {
-  background: #e9ecef;
-  position: absolute;
-  /* top: 80px; */
-  /* overflow: auto; */
-}
+
 /* 
 .main::-webkit-scrollbar {
   width: 0px;   
@@ -213,13 +231,7 @@ overflow-x: scroll;
 } */
 
 /* complementary section */
-.complementary {
-  top: 90px;
-  right: 0px;
-  bottom: 0;
-  position:fixed;
-  padding-right: 8px; 
-}
+
 
 .comContent{
   max-height: 100vh;

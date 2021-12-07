@@ -18,6 +18,6 @@ export const signupNLoginEn = {
     guest_mode_text: "Guest mode",
     forgot_pass_text: "Forgot password",
     recent_loggedIns_text: "Recent Logins",
-    sign_all_out_text: "Sign all out",
+    remove_all_text: "Remove all",
     create_account_text: "Create account"
 }

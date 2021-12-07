@@ -16,54 +16,16 @@ export default function LoggedIn(props) {
     useEffect (() => {
         navigate(`${recentUrl.getUrl()}`)
     },[])
-    const styleLoggedIn = {
-        height: "100vh",
-        background: colors.background
-    }
-
-    const styleBanner = {
-        height: "60px",
-        width: "100%",
-        position: "fixed",
-        background: "white",
-        zIndex: "3",
-        // border: "2px solid"
-    }
-
-    const styleNav = {
-        top: "80px",
-        bottom:"0",
-        position:"fixed",
-        overflowY:"scroll",
-        overflowX:"hidden",
-        zIndex: "1"
-    }
-    const styleMain = {
-        top: "77px",
-        bottom:"0",
-        position:"absolute",
-        // overflowY:"scroll",
-        // overflowX:"hidden",
-        // zIndex: "1"
-    }
-    const styleCom = {
-        top: "90px",
-        right: "0px",
-        bottom:"0",
-        position:"fixed",
-        paddingRight: "8px"
-    }
-
     const { popupSelected } = useSelector(state => state.layoutAlters)
     return (
-        <div className = "" style = {styleLoggedIn}>
-            <div className = "bg-white" style = {styleBanner}>
+        <div className = "loggedIn-layout" >
+            <div className = "banner bg-white">
                 <Banner />
             </div>
-            <header className = "col-2 pe-1" style ={styleNav}>
+            <header className = "navigation col-2 pe-1">
                 <Nav />
             </header>
-            <main className = "row w-100 m-0 p-0" style = {styleMain}>
+            <main className = "main-bg row w-100 m-0 p-0">
                 <div className = "col-2"> </div>
                 <div className ="col ms-1 me-1 p-0">
                     <Main />
@@ -73,7 +35,7 @@ export default function LoggedIn(props) {
                 <div className ="col-3"></div>
                 } 
             </main>
-            <div className = "col-3 p-0" style = {styleCom}>
+            <div className = "complementary col-3 p-0">
                 <Complementaries />
             </div>
             <Footer />

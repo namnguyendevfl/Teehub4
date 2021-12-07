@@ -1,4 +1,4 @@
-import { createSlice,  createAsyncThunk, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 export const navs = {
     getNavSelected: () => JSON.parse(window.localStorage.getItem('navSelected')),
     saveNavSelected: (chapter) => window.localStorage.setItem('navSelected', JSON.stringify(chapter)),   
